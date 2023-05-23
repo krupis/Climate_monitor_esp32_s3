@@ -131,6 +131,8 @@ void example_lvgl_demo_ui(lv_disp_t *disp)
     img_logo = lv_img_create(scr);
     lv_img_set_src(img_logo, &esp_logo);
 
+    
+
     //btn = lv_btn_create(scr);
     //lv_obj_t * lbl = lv_label_create(btn);
     //lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
@@ -141,3 +143,6 @@ void example_lvgl_demo_ui(lv_disp_t *disp)
 
     start_animation(scr);
 }
+
+
+
