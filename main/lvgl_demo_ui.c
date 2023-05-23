@@ -65,7 +65,7 @@ static void anim_timer_cb(lv_timer_t *timer)
     if ((count >= 100) && (count <= 180)) {
         lv_coord_t offset = (sinf((count - 140) * 2.25f / 90.0f) + 1) * 20.0f;
         lv_obj_align(img_logo, LV_ALIGN_CENTER, 0, -offset);
-        lv_obj_align(img_text, LV_ALIGN_CENTER, 0, 2 * offset);
+        lv_obj_align(img_text, LV_ALIGN_CENTER, 0, (2 * offset)-10);
         lv_obj_set_style_img_opa(img_text, offset / 40.0f * 255, 0);
     }
 
@@ -74,7 +74,7 @@ static void anim_timer_cb(lv_timer_t *timer)
         lv_timer_del(timer);
 
         // Enable button
-        lv_obj_clear_state(btn, LV_STATE_DISABLED);
+        //lv_obj_clear_state(btn, LV_STATE_DISABLED);
     } else {
         timer_ctx->count_val = count;
     }
@@ -109,12 +109,12 @@ static void start_animation(lv_obj_t *scr)
     }
 
     // Create timer for animation
-    my_tim_ctx.count_val = -90;
+    my_tim_ctx.count_val = -60;
     my_tim_ctx.scr = scr;
     lv_timer_create(anim_timer_cb, 20, &my_tim_ctx);
 
     // Disable button
-    lv_obj_add_state(btn, LV_STATE_DISABLED);
+    //lv_obj_add_state(btn, LV_STATE_DISABLED);
 }
 
 static void btn_cb(lv_event_t * e)
@@ -131,13 +131,13 @@ void example_lvgl_demo_ui(lv_disp_t *disp)
     img_logo = lv_img_create(scr);
     lv_img_set_src(img_logo, &esp_logo);
 
-    btn = lv_btn_create(scr);
-    lv_obj_t * lbl = lv_label_create(btn);
-    lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
-    lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 30, -30);
+    //btn = lv_btn_create(scr);
+    //lv_obj_t * lbl = lv_label_create(btn);
+    //lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
+    //lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
+    //lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 40, -40);
     // Button event
-    lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
+    //lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
 
     start_animation(scr);
 }
