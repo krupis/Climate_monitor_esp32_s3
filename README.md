@@ -18,15 +18,7 @@ https://github.com/Xinyuan-LilyGO/T-Display-S3
 
 
 
-![uCurrent detected](uCurrent_connected.png)
-
-hello123
-
-
-
-![T-Display-S3-TOUCH](T_Display_S3_TOUCH.png)
-
-![ScreenShot](https://github.com/krupis/T-Display-S3-esp-idf/blob/images/master/T_DISPLAY_S3_TOUCH.png)
+![ScreenShot](https://github.com/krupis/T-Display-S3-esp-idf/blob/master/images/T_DISPLAY_S3_TOUCH.png)
 
 
 
