@@ -21,8 +21,7 @@ https://github.com/Xinyuan-LilyGO/T-Display-S3
 ![uCurrent detected](uCurrent_connected.png)
 hello123
 
-![test](image/T-Display-S3-TOUCH.png)
-hello123
+
 
 ![T-Display-S3-TOUCH](T_Display_S3_TOUCH.png)
 
