@@ -15,6 +15,8 @@
 LV_IMG_DECLARE(esp_logo)
 LV_IMG_DECLARE(esp_text)
 LV_IMG_DECLARE(ue_logo)
+static lv_obj_t *ue_img_logo;
+
 
 typedef struct {
     lv_obj_t *scr;
@@ -126,23 +128,30 @@ static void btn_cb(lv_event_t * e)
 
 void example_lvgl_demo_ui(lv_disp_t *disp)
 {
-    lv_obj_t *scr = lv_disp_get_scr_act(disp);
+    // lv_obj_t *scr = lv_disp_get_scr_act(disp);
 
-    // Create image
-    img_logo = lv_img_create(scr);
-    lv_img_set_src(img_logo, &esp_logo);
+    // // Create image
+    // img_logo = lv_img_create(scr);
+    // lv_img_set_src(img_logo, &esp_logo);
 
     
 
-    btn = lv_btn_create(scr);
-    lv_obj_t * lbl = lv_label_create(btn);
-    lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
-    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
-    lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 40, -40);
-    //Button event
-    lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
+    // btn = lv_btn_create(scr);
+    // lv_obj_t * lbl = lv_label_create(btn);
+    // lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
+    // lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
+    // lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 40, -40);
+    // //Button event
+    // lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
 
-    start_animation(scr);
+    // start_animation(scr);
+
+
+
+    ue_img_logo = lv_img_create(lv_scr_act());
+    lv_img_set_src(ue_img_logo, &ue_logo);
+    lv_obj_center(ue_img_logo);
+    
 }
 
 

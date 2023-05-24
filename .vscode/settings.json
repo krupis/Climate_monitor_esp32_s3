@@ -15,5 +15,13 @@
     "idf.openOcdConfigs": [
         "interface/ftdi/esp32_devkitj_v1.cfg",
         "target/esp32s3.cfg"
-    ]
+    ],
+    "files.associations": {
+        "esp_lcd_panel_io.h": "c",
+        "esp_timer.h": "c",
+        "esp_lcd_panel_vendor.h": "c",
+        "gpio.h": "c",
+        "lvgl.h": "c",
+        "lv_log.h": "c"
+    }
 }
