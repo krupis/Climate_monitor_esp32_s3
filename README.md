@@ -18,7 +18,7 @@ https://github.com/Xinyuan-LilyGO/T-Display-S3
 
 
 
-![ScreenShot](https://github.com/krupis/T-Display-S3-esp-idf/blob/master/images/T_DISPLAY_S3_TOUCH.png)
+![ScreenShot](https://github.com/krupis/T-Display-S3-esp-idf/blob/master/images/T-DISPLAY-S3.jpg)
 
 
 
