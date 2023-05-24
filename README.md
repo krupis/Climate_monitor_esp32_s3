@@ -1,60 +1,22 @@
 | Supported Targets | ESP32 | ESP32-S2 | ESP32-S3 |
 | ----------------- | ----- | -------- | -------- |
-# LVGL porting example (based on i80 interfaced LCD controller)
+# ST7789V (T-Display-S3) from LilyGo example using LVGL 
 
-LVGL is an open-source graphics library for creating modern GUIs. It has plenty of built-in graphical elements with low memory footprint, which is friendly for embedded GUI applications.
-
-This example can be taken as a skeleton of porting the LVGL library onto the `esp_lcd` driver layer. **Note** that, this example only focuses on the display interface, regardless of the input device driver.
-
-The whole porting code is located in [i80_controller_example_main.c](main/i80_controller_example_main.c), and the UI demo code is located in [lvgl_demo_ui.c](main/lvgl_demo_ui.c).
-
-The UI will display two images (one Espressif logo and another Espressif text), which have been converted into C arrays by the [online converting tool](https://lvgl.io/tools/imageconverter), and will be compiled directly into application binary.
-
-This example is constructed by [IDF component manager](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/tools/idf-component-manager.html), all the external dependency will be handled by the CMake build system automatically. In this case, it will help download the lvgl from [registry](https://components.espressif.com/component/lvgl/lvgl), with the version specified in the [manifest file](main/idf_component.yml).
-
-This example uses the [esp_timer](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/esp_timer.html) to generate the ticks needed by LVGL. For more porting guides, please refer to [LVGL porting doc](https://docs.lvgl.io/master/porting/index.html).
 
 ## How to use the example
 
 ### Hardware Required
 
 * An ESP development board
-* An Intel 8080 interfaced (so called MCU interface or parallel interface) LCD (this example can use ST7789, NT35510 or ILI9341)
+* T-Display-S3 development board (https://www.lilygo.cc/products/t-display-s3)
 * An USB cable for power supply and programming
 
 ### Hardware Connection
 
-The connection between ESP Board and the LCD is as follows:
+Detailed description of T-Display-S3 development board can be found here:
+https://github.com/Xinyuan-LilyGO/T-Display-S3
 
-```
-   ESP Board                      LCD Screen
-┌─────────────┐              ┌────────────────┐
-│             │              │                │
-│         3V3 ├─────────────►│ VCC            │
-│             │              │                │
-│         GND ├──────────────┤ GND            │
-│             │              │                │
-│  DATA[0..7] │◄────────────►│ DATA[0..7]     │
-│             │              │                │
-│        PCLK ├─────────────►│ PCLK           │
-│             │              │                │
-│          CS ├─────────────►│ CS             │
-│             │              │                │
-│         D/C ├─────────────►│ D/C            │
-│             │              │                │
-│         RST ├─────────────►│ RST            │
-│             │              │                │
-│    BK_LIGHT ├─────────────►│ BCKL           │
-│             │              │                │
-│             │              └────────────────┘
-│             │                   LCD TOUCH
-│             │              ┌────────────────┐
-│             │              │                │
-│     I2C SCL ├─────────────►│ I2C SCL        │
-│             │              │                │
-│     I2C SDA │◄────────────►│ I2C SDA        │
-│             │              │                │
-└─────────────┘              └────────────────┘
+![Hardware connections](T-Display-S3.jpg)
 
 ```
 
