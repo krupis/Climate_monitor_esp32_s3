@@ -14,6 +14,7 @@
 // LVGL image declare
 LV_IMG_DECLARE(esp_logo)
 LV_IMG_DECLARE(esp_text)
+LV_IMG_DECLARE(ue_logo)
 
 typedef struct {
     lv_obj_t *scr;
@@ -74,7 +75,7 @@ static void anim_timer_cb(lv_timer_t *timer)
         lv_timer_del(timer);
 
         // Enable button
-        //lv_obj_clear_state(btn, LV_STATE_DISABLED);
+        lv_obj_clear_state(btn, LV_STATE_DISABLED);
     } else {
         timer_ctx->count_val = count;
     }
@@ -114,7 +115,7 @@ static void start_animation(lv_obj_t *scr)
     lv_timer_create(anim_timer_cb, 20, &my_tim_ctx);
 
     // Disable button
-    //lv_obj_add_state(btn, LV_STATE_DISABLED);
+    lv_obj_add_state(btn, LV_STATE_DISABLED);
 }
 
 static void btn_cb(lv_event_t * e)
@@ -133,13 +134,13 @@ void example_lvgl_demo_ui(lv_disp_t *disp)
 
     
 
-    //btn = lv_btn_create(scr);
-    //lv_obj_t * lbl = lv_label_create(btn);
-    //lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
-    //lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
-    //lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 40, -40);
-    // Button event
-    //lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
+    btn = lv_btn_create(scr);
+    lv_obj_t * lbl = lv_label_create(btn);
+    lv_label_set_text_static(lbl, LV_SYMBOL_REFRESH" SHOW AGAIN");
+    lv_obj_set_style_text_font(lbl, &lv_font_montserrat_20, 0);
+    lv_obj_align(btn, LV_ALIGN_BOTTOM_LEFT, 40, -40);
+    //Button event
+    lv_obj_add_event_cb(btn, btn_cb, LV_EVENT_CLICKED, scr);
 
     start_animation(scr);
 }

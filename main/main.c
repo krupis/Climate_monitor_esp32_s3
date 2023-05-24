@@ -11,14 +11,14 @@
 #include "esp_log.h"
 #include "lvgl.h"
 
-static lv_obj_t *meter;
 
+static lv_obj_t *meter;
 static void set_value(void *indic, int32_t v)
 {
     lv_meter_set_indicator_end_value(meter, indic, v);
 }
 
-static lv_obj_t *meter;
+
 
 static const char *TAG = "example";
 
@@ -223,15 +223,17 @@ void app_main(void)
 
     ESP_LOGI(TAG, "Display LVGL animation");
 
-    // example_lvgl_demo_ui(disp);
+    example_lvgl_demo_ui(disp);
 
+    //example1
     /*
-         lv_obj_t *win = lv_win_create(lv_scr_act(), 40);
-         assert(win);
-         lv_win_add_title(win, "Hello world123!");
+    lv_obj_t *win = lv_win_create(lv_scr_act(), 40);
+    assert(win);
+    lv_win_add_title(win, "Hello world123!");
+    */
 
-         */
-
+    //example2
+    /*
     meter = lv_meter_create(lv_scr_act());
     lv_obj_center(meter);
     lv_obj_set_size(meter, 170, 170);
@@ -243,12 +245,12 @@ void app_main(void)
     lv_meter_set_scale_major_ticks(meter, scale, 1, 2, 15, lv_color_hex3(0xeee), 10);
     lv_meter_set_scale_range(meter, scale, 0, 100, 270, 135);
 
-    /*Add a three arc indicator*/
+    //Add a three arc indicator
     lv_meter_indicator_t *indic1 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x00F), 0);
     lv_meter_indicator_t *indic2 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x0F0), -10);
     lv_meter_indicator_t *indic3 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0xF00), -20);
 
-    /*Create an animation to set the value*/
+    //Create an animation to set the value
     lv_anim_t a;
     lv_anim_init(&a);
     lv_anim_set_exec_cb(&a, set_value);
@@ -271,6 +273,7 @@ void app_main(void)
     lv_anim_set_playback_time(&a, 2000);
     lv_anim_set_var(&a, indic3);
     lv_anim_start(&a);
+    */
 
     while (1)
     {
