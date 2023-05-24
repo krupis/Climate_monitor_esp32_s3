@@ -10,26 +10,16 @@
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
 
-
-
 static lv_obj_t *meter;
 static lv_obj_t *ue_img_logo;
 static lv_obj_t *esp_img_logo;
 LV_IMG_DECLARE(ue_logo)
 LV_IMG_DECLARE(esp_logo)
 
-
-
 static void set_value(void *indic, int32_t v)
 {
     lv_meter_set_indicator_end_value(meter, indic, v);
 }
-
-
-
-
-
-
 
 static bool example_notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
@@ -54,7 +44,6 @@ static void example_increase_lvgl_tick(void *arg)
     /* Tell LVGL how many milliseconds has elapsed */
     lv_tick_inc(EXAMPLE_LVGL_TICK_PERIOD_MS);
 }
-
 
 void lvgl_setup()
 {
@@ -99,26 +88,24 @@ void lvgl_setup()
             EXAMPLE_PIN_NUM_DATA6,
             EXAMPLE_PIN_NUM_DATA7,
         },
-        .bus_width = CONFIG_EXAMPLE_LCD_I80_BUS_WIDTH,
-        .max_transfer_bytes = LVGL_LCD_BUF_SIZE * sizeof(uint16_t),
-        .psram_trans_align = EXAMPLE_PSRAM_DATA_ALIGNMENT,
-        .sram_trans_align = 4,
+        .bus_width = 8,
+        .max_transfer_bytes = LVGL_LCD_BUF_SIZE * sizeof(uint16_t)
+        //.psram_trans_align = EXAMPLE_PSRAM_DATA_ALIGNMENT,
+        //.sram_trans_align = 4,
     };
     ESP_ERROR_CHECK(esp_lcd_new_i80_bus(&bus_config, &i80_bus));
     esp_lcd_panel_io_handle_t io_handle = NULL;
     esp_lcd_panel_io_i80_config_t io_config = {
         .cs_gpio_num = EXAMPLE_PIN_NUM_CS,
         .pclk_hz = EXAMPLE_LCD_PIXEL_CLOCK_HZ,
-        .trans_queue_depth = 10,
+        .trans_queue_depth = 20,
         .dc_levels = {
             .dc_idle_level = 0,
             .dc_cmd_level = 0,
             .dc_dummy_level = 0,
             .dc_data_level = 1,
         },
-        .flags = {
-            .swap_color_bytes = !LV_COLOR_16_SWAP, // Swap can be done in LvGL (default) or DMA
-        },
+        
         .on_color_trans_done = example_notify_lvgl_flush_ready,
         .user_ctx = &disp_drv,
         .lcd_cmd_bits = EXAMPLE_LCD_CMD_BITS,
@@ -131,7 +118,7 @@ void lvgl_setup()
     ESP_LOGI(TAG, "Install LCD driver of st7789");
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = EXAMPLE_PIN_NUM_RST,
-        .rgb_endian = LCD_RGB_ENDIAN_RGB,
+        .rgb_endian = ESP_LCD_COLOR_SPACE_RGB,
         .bits_per_pixel = 16,
     };
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
@@ -139,11 +126,19 @@ void lvgl_setup()
     esp_lcd_panel_reset(panel_handle);
     esp_lcd_panel_init(panel_handle);
 
-    ESP_ERROR_CHECK(esp_lcd_panel_invert_color(panel_handle, true));
-    ESP_ERROR_CHECK(esp_lcd_panel_swap_xy(panel_handle, true));
-    ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, true));
-    ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0, 35));
 
+    // ESP_ERROR_CHECK(esp_lcd_panel_invert_color(panel_handle, true));
+    // ESP_ERROR_CHECK(esp_lcd_panel_swap_xy(panel_handle, true));
+    // ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, true));
+    // ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0, 35));
+
+
+    esp_lcd_panel_invert_color(panel_handle, true);
+    esp_lcd_panel_swap_xy(panel_handle, true);
+    esp_lcd_panel_mirror(panel_handle, false, true);
+    // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
+    esp_lcd_panel_set_gap(panel_handle, 0, 35);
+    
     esp_lcd_panel_io_tx_param(io_handle, 0xF2, (uint8_t[]){0}, 1); // 3Gamma function disable
     esp_lcd_panel_io_tx_param(io_handle, 0x26, (uint8_t[]){1}, 1); // Gamma curve 1 selected
     esp_lcd_panel_io_tx_param(io_handle, 0xE0, (uint8_t[]){        // Set positive gamma
@@ -153,20 +148,14 @@ void lvgl_setup()
                                                            0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1, 0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F},
                               15);
 
+
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
-
-
-
-
 
     lv_init();
 
     // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
-    lv_color_t *buf1 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA );
+    lv_color_t *buf1 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf1);
-    //    lv_color_t *buf2 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA );
-    //    assert(buf2);
-    // initialize LVGL draw buffers
     lv_disp_draw_buf_init(&disp_buf, buf1, NULL, LVGL_LCD_BUF_SIZE);
 
     ESP_LOGI(TAG, "Register display driver to LVGL");
@@ -187,10 +176,7 @@ void lvgl_setup()
     ESP_ERROR_CHECK(esp_timer_create(&lvgl_tick_timer_args, &lvgl_tick_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, EXAMPLE_LVGL_TICK_PERIOD_MS * 1000));
 
-    xTaskCreate(lvgl_timer_task, "LVGL_timer_task", 4096, NULL, 10, NULL);
-
-
-
+    xTaskCreatePinnedToCore(lvgl_timer_task, "lvgl Timer", 10000, NULL, 4, NULL, 1);
 }
 
 static void lvgl_timer_task(void *arg)
@@ -198,66 +184,69 @@ static void lvgl_timer_task(void *arg)
     while (1)
     {
         // raise the task priority of LVGL and/or reduce the handler period can improve the performance
-        vTaskDelay(20 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
         // The task running lv_timer_handler should have lower priority than that running `lv_tick_inc`
         lv_timer_handler();
     }
 }
 
-
-
-void display_meter(){
+void display_meter()
+{
     meter = lv_meter_create(lv_scr_act());
-	lv_obj_center(meter);
-	lv_obj_set_size(meter, 170, 170);
+    lv_obj_center(meter);
+    lv_obj_set_size(meter, 170, 170);
 
-	/*Remove the circle from the middle*/
-	lv_obj_remove_style(meter, NULL, LV_PART_INDICATOR);
+    /*Remove the circle from the middle*/
+    lv_obj_remove_style(meter, NULL, LV_PART_INDICATOR);
 
-	/*Add a scale first*/
-	lv_meter_scale_t * scale = lv_meter_add_scale(meter);
-	lv_meter_set_scale_ticks(meter, scale, 11, 2, 10, lv_palette_main(LV_PALETTE_GREY));
-	lv_meter_set_scale_major_ticks(meter, scale, 1, 2, 15, lv_color_hex3(0xeee), 10);
-	lv_meter_set_scale_range(meter, scale, 0, 100, 270, 90);
+    /*Add a scale first*/
+    lv_meter_scale_t *scale = lv_meter_add_scale(meter);
+    lv_meter_set_scale_ticks(meter, scale, 11, 2, 10, lv_palette_main(LV_PALETTE_GREY));
+    lv_meter_set_scale_major_ticks(meter, scale, 1, 2, 15, lv_color_hex3(0xeee), 10);
+    lv_meter_set_scale_range(meter, scale, 0, 100, 270, 90);
 
-	/*Add a three arc indicator*/
-	lv_meter_indicator_t * indic1 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x00F), 0);
-	lv_meter_indicator_t * indic2 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x0F0), -10);
-	lv_meter_indicator_t * indic3 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0xF00), -20);
+    /*Add a three arc indicator*/
+    lv_meter_indicator_t *indic1 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x00F), 0);
+    //lv_meter_indicator_t *indic2 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x0F0), -10);
+    //lv_meter_indicator_t *indic3 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0xF00), -20);
 
-	/*Create an animation to set the value*/
-	lv_anim_t a;
-	lv_anim_init(&a);
-	lv_anim_set_exec_cb(&a, set_value);
-	lv_anim_set_values(&a, 0, 100);
-	lv_anim_set_repeat_delay(&a, 100);
-	lv_anim_set_playback_delay(&a, 100);
-	lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
+    /*Create an animation to set the value*/
+    lv_anim_t a;
+    lv_anim_init(&a);
+    lv_anim_set_exec_cb(&a, set_value);
+    lv_anim_set_values(&a, 0, 100);
+    lv_anim_set_repeat_delay(&a, 100);
+    lv_anim_set_playback_delay(&a, 2000);
+    lv_anim_set_repeat_count(&a, LV_ANIM_REPEAT_INFINITE);
 
-	lv_anim_set_time(&a, 2000);
-	lv_anim_set_playback_time(&a, 500);
-	lv_anim_set_var(&a, indic1);
-	lv_anim_start(&a);
+    lv_anim_set_time(&a, 2000);
+    lv_anim_set_playback_time(&a, 500);
+    lv_anim_set_var(&a, indic1);
+    lv_anim_start(&a);
 
-	lv_anim_set_time(&a, 1000);
-	lv_anim_set_playback_time(&a, 1000);
-	lv_anim_set_var(&a, indic2);
-	lv_anim_start(&a);
+/*
+    lv_anim_set_time(&a, 1000);
+    lv_anim_set_playback_time(&a, 1000);
+    lv_anim_set_var(&a, indic2);
+    lv_anim_start(&a);
 
-	lv_anim_set_time(&a, 1000);
-	lv_anim_set_playback_time(&a, 2000);
-	lv_anim_set_var(&a, indic3);
-	lv_anim_start(&a);
-	/* page 3 */
+    lv_anim_set_time(&a, 1000);
+    lv_anim_set_playback_time(&a, 2000);
+    lv_anim_set_var(&a, indic3);
+    lv_anim_start(&a);
+    */
+    /* page 3 */
 }
 
-void display_window(){
+void display_window()
+{
     lv_obj_t *win = lv_win_create(lv_scr_act(), 40);
     assert(win);
     lv_win_add_title(win, "test123!");
 }
 
-void display_image(){
+void display_image()
+{
     // ue_img_logo = lv_img_create(lv_scr_act());
     // lv_img_set_src(ue_img_logo, &ue_logo);
     // lv_obj_center(ue_img_logo);
