@@ -19,12 +19,12 @@ https://github.com/Xinyuan-LilyGO/T-Display-S3
 
 
 ![uCurrent detected](uCurrent_connected.png)
-
+hello123
 
 ![test](image/T-Display-S3-TOUCH.png)
+hello123
 
-
-![T-Display-S3-TOUCH](T-Display-S3-TOUCH.png)
+![T-Display-S3-TOUCH](T_Display_S3_TOUCH.png)
 
 The GPIO number used by this example can be changed in [i80_controller_example_main.c](main/i80_controller_example_main.c).
 Especially, please pay attention to the binary signal level used to turn the LCD backlight on, some LCD modules need a low level to turn it on, while others require a high level. You can change the backlight level macro `EXAMPLE_LCD_BK_LIGHT_ON_LEVEL` in [i80_controller_example_main.c](main/i80_controller_example_main.c).
