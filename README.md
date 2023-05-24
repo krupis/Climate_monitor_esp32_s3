@@ -16,7 +16,7 @@
 Detailed description of T-Display-S3 development board can be found here:
 https://github.com/Xinyuan-LilyGO/T-Display-S3
 
-![Hardware connections](T-Display-S3.jpg)
+![Hardware connections](https://github.com/Xinyuan-LilyGO/T-Display-S3/blob/main/image/T-DISPLAY-S3.jpg?raw=true)
 
 ```
 
