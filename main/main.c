@@ -11,6 +11,7 @@
 #include "esp_log.h"
 #include "lvgl.h"
 #include "lvgl_setup.h"
+#include "lvgl_water_droplet.h"
 
 static const char *TAG = "main";
 
@@ -20,7 +21,17 @@ void app_main(void)
 
 
     //Call one at a time to see examples
-    display_meter();
+    //display_meter();
     // display_image();
     // display_window();
+
+    //display_test_temperature();
+    //test_display_init();
+    //droplet_chatgpt();
+
+
+    display_transparent_water_droplet();
+
+
+    
 }

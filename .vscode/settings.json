@@ -22,6 +22,7 @@
         "esp_lcd_panel_vendor.h": "c",
         "gpio.h": "c",
         "lvgl.h": "c",
-        "lv_log.h": "c"
+        "lv_log.h": "c",
+        "random": "c"
     }
 }

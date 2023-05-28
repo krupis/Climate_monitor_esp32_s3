@@ -6,6 +6,7 @@
 #include "esp_heap_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "ui_helpers.h"
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
@@ -15,6 +16,27 @@ static lv_obj_t *ue_img_logo;
 static lv_obj_t *esp_img_logo;
 LV_IMG_DECLARE(ue_logo)
 LV_IMG_DECLARE(esp_logo)
+
+// test
+//  lv_obj_t * ui_Screen1;
+//  lv_obj_t * ui_Image1;
+//  lv_obj_t * ui_Image2;
+//  lv_obj_t * ui_Label2;
+//  lv_obj_t * ui____initial_actions0;
+//  LV_IMG_DECLARE(temperature)
+
+// droplet test
+
+///////////////////// VARIABLES ////////////////////
+void Water_droplet_Animation(lv_obj_t *TargetObject, int delay);
+
+// SCREEN: ui_Screen1
+LV_IMG_DECLARE(droplet2)
+lv_obj_t *ui_Screen1;
+lv_obj_t *ui_Image2;
+lv_obj_t *ui_Label2;
+lv_obj_t *ui____initial_actions0;
+const lv_img_dsc_t *ui_imgset_droplet[1] = {&droplet2};
 
 static void set_value(void *indic, int32_t v)
 {
@@ -105,7 +127,7 @@ void lvgl_setup()
             .dc_dummy_level = 0,
             .dc_data_level = 1,
         },
-        
+
         .on_color_trans_done = example_notify_lvgl_flush_ready,
         .user_ctx = &disp_drv,
         .lcd_cmd_bits = EXAMPLE_LCD_CMD_BITS,
@@ -126,19 +148,17 @@ void lvgl_setup()
     esp_lcd_panel_reset(panel_handle);
     esp_lcd_panel_init(panel_handle);
 
-
     // ESP_ERROR_CHECK(esp_lcd_panel_invert_color(panel_handle, true));
     // ESP_ERROR_CHECK(esp_lcd_panel_swap_xy(panel_handle, true));
     // ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, true));
     // ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0, 35));
-
 
     esp_lcd_panel_invert_color(panel_handle, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
     esp_lcd_panel_mirror(panel_handle, false, true);
     // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
     esp_lcd_panel_set_gap(panel_handle, 0, 35);
-    
+
     esp_lcd_panel_io_tx_param(io_handle, 0xF2, (uint8_t[]){0}, 1); // 3Gamma function disable
     esp_lcd_panel_io_tx_param(io_handle, 0x26, (uint8_t[]){1}, 1); // Gamma curve 1 selected
     esp_lcd_panel_io_tx_param(io_handle, 0xE0, (uint8_t[]){        // Set positive gamma
@@ -147,7 +167,6 @@ void lvgl_setup()
     esp_lcd_panel_io_tx_param(io_handle, 0xE1, (uint8_t[]){// Set negative gamma
                                                            0x00, 0x0E, 0x14, 0x03, 0x11, 0x07, 0x31, 0xC1, 0x48, 0x08, 0x0F, 0x0C, 0x31, 0x36, 0x0F},
                               15);
-
 
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
@@ -207,8 +226,8 @@ void display_meter()
 
     /*Add a three arc indicator*/
     lv_meter_indicator_t *indic1 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x00F), 0);
-    //lv_meter_indicator_t *indic2 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x0F0), -10);
-    //lv_meter_indicator_t *indic3 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0xF00), -20);
+    // lv_meter_indicator_t *indic2 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0x0F0), -10);
+    // lv_meter_indicator_t *indic3 = lv_meter_add_arc(meter, scale, 10, lv_color_hex3(0xF00), -20);
 
     /*Create an animation to set the value*/
     lv_anim_t a;
@@ -224,17 +243,17 @@ void display_meter()
     lv_anim_set_var(&a, indic1);
     lv_anim_start(&a);
 
-/*
-    lv_anim_set_time(&a, 1000);
-    lv_anim_set_playback_time(&a, 1000);
-    lv_anim_set_var(&a, indic2);
-    lv_anim_start(&a);
+    /*
+        lv_anim_set_time(&a, 1000);
+        lv_anim_set_playback_time(&a, 1000);
+        lv_anim_set_var(&a, indic2);
+        lv_anim_start(&a);
 
-    lv_anim_set_time(&a, 1000);
-    lv_anim_set_playback_time(&a, 2000);
-    lv_anim_set_var(&a, indic3);
-    lv_anim_start(&a);
-    */
+        lv_anim_set_time(&a, 1000);
+        lv_anim_set_playback_time(&a, 2000);
+        lv_anim_set_var(&a, indic3);
+        lv_anim_start(&a);
+        */
     /* page 3 */
 }
 
@@ -255,3 +274,129 @@ void display_image()
     lv_img_set_src(esp_img_logo, &esp_logo);
     lv_obj_center(esp_img_logo);
 }
+
+// void display_test_temperature(){
+
+//     lv_disp_t * dispp = lv_disp_get_default();
+//     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
+//                                                false, LV_FONT_DEFAULT);
+//     lv_disp_set_theme(dispp, theme);
+
+//     ui_Screen1 = lv_obj_create(NULL);
+//     lv_obj_clear_flag(ui_Screen1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+//     ui_Image2 = lv_img_create(ui_Screen1);
+//     lv_img_set_src(ui_Image2, &temperature);
+//     lv_obj_set_width(ui_Image2, LV_SIZE_CONTENT);   /// 50
+//     lv_obj_set_height(ui_Image2, LV_SIZE_CONTENT);    /// 50
+//     lv_obj_set_align(ui_Image2, LV_ALIGN_CENTER);
+//     lv_obj_add_flag(ui_Image2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+//     lv_obj_clear_flag(ui_Image2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+//     ui_Label2 = lv_label_create(ui_Screen1);
+//     lv_obj_set_width(ui_Label2, LV_SIZE_CONTENT);   /// 1
+//     lv_obj_set_height(ui_Label2, LV_SIZE_CONTENT);    /// 1
+//     lv_obj_set_x(ui_Label2, 1);
+//     lv_obj_set_y(ui_Label2, -45);
+//     lv_obj_set_align(ui_Label2, LV_ALIGN_CENTER);
+//     lv_label_set_text(ui_Label2, "Temperature");
+
+//     ui____initial_actions0 = lv_obj_create(NULL);
+//     lv_disp_load_scr(ui_Screen1);
+
+// }
+
+void Water_droplet_Animation(lv_obj_t *TargetObject, int delay)
+{
+    ui_anim_user_data_t *PropertyAnimation_0_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+    PropertyAnimation_0_user_data->target = TargetObject;
+    PropertyAnimation_0_user_data->val = -1;
+    lv_anim_t PropertyAnimation_0;
+    lv_anim_init(&PropertyAnimation_0);
+    lv_anim_set_time(&PropertyAnimation_0, 1000);
+    lv_anim_set_user_data(&PropertyAnimation_0, PropertyAnimation_0_user_data);
+    lv_anim_set_custom_exec_cb(&PropertyAnimation_0, _ui_anim_callback_set_opacity);
+    lv_anim_set_values(&PropertyAnimation_0, 0, 255);
+    lv_anim_set_path_cb(&PropertyAnimation_0, lv_anim_path_linear);
+    lv_anim_set_delay(&PropertyAnimation_0, delay + 0);
+    // lv_anim_set_deleted_cb(&PropertyAnimation_0, _ui_anim_callback_free_user_data);
+    lv_anim_set_playback_time(&PropertyAnimation_0, 0);
+    lv_anim_set_playback_delay(&PropertyAnimation_0, 0);
+    lv_anim_set_repeat_count(&PropertyAnimation_0, 0);
+    lv_anim_set_repeat_delay(&PropertyAnimation_0, 0);
+    lv_anim_set_early_apply(&PropertyAnimation_0, true);
+    lv_anim_set_get_value_cb(&PropertyAnimation_0, &_ui_anim_callback_get_opacity);
+    lv_anim_start(&PropertyAnimation_0);
+    ui_anim_user_data_t *PropertyAnimation_1_user_data = lv_mem_alloc(sizeof(ui_anim_user_data_t));
+    PropertyAnimation_1_user_data->target = TargetObject;
+    PropertyAnimation_1_user_data->val = -1;
+    lv_anim_t PropertyAnimation_1;
+    lv_anim_init(&PropertyAnimation_1);
+    lv_anim_set_time(&PropertyAnimation_1, 1000);
+    lv_anim_set_user_data(&PropertyAnimation_1, PropertyAnimation_1_user_data);
+    lv_anim_set_custom_exec_cb(&PropertyAnimation_1, _ui_anim_callback_set_y);
+    lv_anim_set_values(&PropertyAnimation_1, 0, 200);
+    lv_anim_set_path_cb(&PropertyAnimation_1, lv_anim_path_linear);
+    lv_anim_set_delay(&PropertyAnimation_1, delay + 0);
+    // lv_anim_set_deleted_cb(&PropertyAnimation_1, _ui_anim_callback_free_user_data);
+    lv_anim_set_playback_time(&PropertyAnimation_1, 0);
+    lv_anim_set_playback_delay(&PropertyAnimation_1, 0);
+    lv_anim_set_repeat_count(&PropertyAnimation_1, 0);
+    lv_anim_set_repeat_delay(&PropertyAnimation_1, 0);
+    lv_anim_set_early_apply(&PropertyAnimation_1, false);
+    lv_anim_set_get_value_cb(&PropertyAnimation_1, &_ui_anim_callback_get_y);
+    lv_anim_start(&PropertyAnimation_1);
+}
+
+void droplet_init(void)
+{
+    ui_Screen1 = lv_obj_create(NULL);
+    lv_obj_clear_flag(ui_Screen1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
+
+    ui_Image2 = lv_img_create(ui_Screen1);
+    lv_img_set_src(ui_Image2, &droplet2);
+    lv_obj_set_width(ui_Image2, LV_SIZE_CONTENT);  /// 50
+    lv_obj_set_height(ui_Image2, LV_SIZE_CONTENT); /// 50
+    lv_obj_set_align(ui_Image2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Image2, LV_OBJ_FLAG_ADV_HITTEST);  /// Flags
+    lv_obj_clear_flag(ui_Image2, LV_OBJ_FLAG_SCROLLABLE); /// Flags
+
+    ui_Label2 = lv_label_create(ui_Screen1);
+    lv_obj_set_width(ui_Label2, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Label2, LV_SIZE_CONTENT); /// 1
+    lv_obj_set_x(ui_Label2, -104);
+    lv_obj_set_y(ui_Label2, -63);
+    lv_obj_set_align(ui_Label2, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_Label2, "Temperature");
+}
+
+void test_display_init(void)
+{
+    // lv_disp_t * dispp = lv_disp_get_default();
+    // lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
+    //                                            false, LV_FONT_DEFAULT);
+    // lv_disp_set_theme(dispp, theme);
+    droplet_init();
+    // Water_droplet_Animation(ui_Image2,1000);
+
+    // ui____initial_actions0 = lv_obj_create(NULL);
+    lv_disp_load_scr(ui_Screen1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
