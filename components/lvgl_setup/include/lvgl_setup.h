@@ -46,17 +46,9 @@ void lvgl_setup();
 void display_meter();
 void display_window();
 void display_image();
-//void display_test_temperature();
-void test_display_init(void);
 
 
 
-
-
-
-
-
-void changeImageColor(lv_obj_t* imgObj, lv_color_t color);
 
 
 #endif /* LVGL_SETUP_H */
