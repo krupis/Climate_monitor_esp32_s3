@@ -74,6 +74,7 @@ bool ParseSystemCmd(char *line, uint16_t cmd_size)
     if (!strncmp("high", line,4))
     {	
             printf("pong\n");
+
             return true;
     }
     if (!strncmp("low", line,3))

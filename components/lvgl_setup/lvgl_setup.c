@@ -17,17 +17,6 @@ static lv_obj_t *esp_img_logo;
 LV_IMG_DECLARE(ue_logo)
 LV_IMG_DECLARE(esp_logo)
 
-// test
-//  lv_obj_t * ui_Screen1;
-//  lv_obj_t * ui_Image1;
-//  lv_obj_t * ui_Image2;
-//  lv_obj_t * ui_Label2;
-//  lv_obj_t * ui____initial_actions0;
-//  LV_IMG_DECLARE(temperature)
-
-// droplet test
-
-///////////////////// VARIABLES ////////////////////
 
 
 
