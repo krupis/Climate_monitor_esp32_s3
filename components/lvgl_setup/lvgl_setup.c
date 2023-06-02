@@ -7,6 +7,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "ui_helpers.h"
+#include "esp_lcd_touch_cst816s.h"
+
+
+#define EXAMPLE_I2C_NUM                 0   // I2C number
+#define EXAMPLE_I2C_SCL                 17
+#define EXAMPLE_I2C_SDA                 18
+
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
@@ -98,6 +105,7 @@ void lvgl_setup()
         //.psram_trans_align = EXAMPLE_PSRAM_DATA_ALIGNMENT,
         //.sram_trans_align = 4,
     };
+
     ESP_ERROR_CHECK(esp_lcd_new_i80_bus(&bus_config, &i80_bus));
     esp_lcd_panel_io_handle_t io_handle = NULL;
     esp_lcd_panel_io_i80_config_t io_config = {
@@ -152,6 +160,85 @@ void lvgl_setup()
                               15);
 
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
+
+
+
+
+
+
+
+
+
+
+//TOUCH FUNCTIONS
+    esp_lcd_touch_handle_t tp = NULL;
+    esp_lcd_panel_io_handle_t tp_io_handle = NULL;
+
+    const i2c_config_t i2c_conf = {
+        .mode = I2C_MODE_MASTER,
+        .sda_io_num = EXAMPLE_I2C_SDA,
+        .scl_io_num = EXAMPLE_I2C_SCL,
+        .sda_pullup_en = GPIO_PULLUP_ENABLE,
+        .scl_pullup_en = GPIO_PULLUP_ENABLE,
+        .master.clk_speed = 400000,
+    };
+    ESP_LOGI(TAG,"Initializing I2C for display touch");
+    /* Initialize I2C */
+    ESP_ERROR_CHECK(i2c_param_config(EXAMPLE_I2C_NUM, &i2c_conf));
+    ESP_ERROR_CHECK(i2c_driver_install(EXAMPLE_I2C_NUM, i2c_conf.mode, 0, 0, 0));
+
+    
+    esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_CST816S_CONFIG();
+
+
+
+
+    ESP_LOGI(TAG,"esp_lcd_new_panel_io_i2c");
+    ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
+
+    esp_lcd_touch_config_t tp_cfg = {
+        .x_max = 320,
+        .y_max = 170,
+        .rst_gpio_num = 21,
+        .int_gpio_num = 16,
+        .levels = {
+            .reset = 0,
+            .interrupt = 0,
+        },
+        .flags = {
+            .swap_xy = 0,
+            .mirror_x = 0,
+            .mirror_y = 0,
+        },
+    };
+
+    ESP_LOGI(TAG,"esp_lcd_touch_new_i2c_cst816s");
+    esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
+
+
+    // static lv_indev_drv_t indev_drv;    // Input device driver (Touch)
+    // lv_indev_drv_init(&indev_drv);
+    // indev_drv.type = LV_INDEV_TYPE_POINTER;
+    // indev_drv.disp = disp;
+    // indev_drv.read_cb = example_lvgl_touch_cb;
+    // indev_drv.user_data = tp;
+
+    // lv_indev_drv_register(&indev_drv);
+    //END TOUCH FUNCTIONS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     lv_init();
 

@@ -7,6 +7,7 @@
 #include "esp_lcd_panel_vendor.h"
 #include "esp_lcd_panel_ops.h"
 #include "driver/gpio.h"
+#include "driver/i2c.h"
 
 #define EXAMPLE_LCD_PIXEL_CLOCK_HZ (10 * 1000 * 1000)
 
