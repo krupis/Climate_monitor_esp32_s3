@@ -64,7 +64,7 @@ void app_main(void)
     // display_window();
 
 
-    Create_main_display();  
+    //Create_main_display();  
 
     // vTaskDelay(4000/portTICK_PERIOD_MS);
     // Move_water_up_down(ui_Water,0,97,70);

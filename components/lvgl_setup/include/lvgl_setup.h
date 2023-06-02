@@ -29,6 +29,8 @@
 #define EXAMPLE_PIN_NUM_POWER 15
 #define PIN_LCD_RD 9
 
+#define PIN_TOUCH_RD                 21
+#define PIN_TOUCH_INT                16
 // The pixel number in horizontal and vertical
 #define EXAMPLE_LCD_H_RES 320
 #define EXAMPLE_LCD_V_RES 170

@@ -13,7 +13,7 @@
 #define EXAMPLE_I2C_NUM                 0   // I2C number
 #define EXAMPLE_I2C_SCL                 17
 #define EXAMPLE_I2C_SDA                 18
-
+#define TP_RES_GPIO                 21
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
@@ -74,12 +74,16 @@ void lvgl_setup()
             .pin_bit_mask = 1ULL << PIN_LCD_RD};
     ESP_ERROR_CHECK(gpio_config(&input_conf));
 
+
+
     gpio_config_t bk_gpio_config =
         {
             .mode = GPIO_MODE_OUTPUT,
             .pin_bit_mask = 1ULL << EXAMPLE_PIN_NUM_BK_LIGHT};
     ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
     gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
+    
+
 
     static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
     static lv_disp_drv_t disp_drv;      // contains callback functions
@@ -197,8 +201,8 @@ void lvgl_setup()
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
 
     esp_lcd_touch_config_t tp_cfg = {
-        .x_max = 320,
-        .y_max = 170,
+        .x_max = 100,
+        .y_max = 100,
         .rst_gpio_num = 21,
         .int_gpio_num = 16,
         .levels = {
@@ -212,8 +216,8 @@ void lvgl_setup()
         },
     };
 
-    ESP_LOGI(TAG,"esp_lcd_touch_new_i2c_cst816s");
-    esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
+    // ESP_LOGI(TAG,"esp_lcd_touch_new_i2c_cst816s");
+     esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
 
 
     // static lv_indev_drv_t indev_drv;    // Input device driver (Touch)
