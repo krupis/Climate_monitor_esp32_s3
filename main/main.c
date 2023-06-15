@@ -59,12 +59,17 @@ void app_main(void)
 
 
     //Call one at a time to see examples
-    //display_meter();
+    // bsp_display_lock(0);
+    // display_meter();
+    // bsp_display_unlock();
     // display_image();
     // display_window();
+    bsp_display_lock(0);
+    display_color_wheel();
+    bsp_display_unlock();
 
 
-    Create_main_display();  
+    //Create_main_display();  
 
     // vTaskDelay(4000/portTICK_PERIOD_MS);
     // Move_water_up_down(ui_Water,0,97,70);

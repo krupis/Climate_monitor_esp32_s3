@@ -3,8 +3,7 @@
 
 #include "lvgl.h"
 
-void ui_Screen2_screen_init(void);
-void Moving_water_Animation(lv_obj_t * TargetObject, int delay);
+void ui_Screen1_screen_init(void);
 void Create_main_display(void);
-void Move_water_up_down(lv_obj_t * TargetObject, int delay,uint16_t start,uint16_t end);
+
 #endif

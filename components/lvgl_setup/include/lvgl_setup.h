@@ -7,8 +7,20 @@
 #include "esp_lcd_panel_vendor.h"
 #include "esp_lcd_panel_ops.h"
 #include "driver/gpio.h"
+#include "driver/i2c.h"
+#include "esp_lcd_touch_cst816s.h"
+
+
 
 #define EXAMPLE_LCD_PIXEL_CLOCK_HZ (10 * 1000 * 1000)
+
+
+
+#define EXAMPLE_I2C_SCL                17
+#define EXAMPLE_I2C_SDA                18
+#define PIN_TOUCH_RES                  21
+#define EXAMPLE_I2C_NUM                 0   // I2C number
+
 
 #define EXAMPLE_LCD_BK_LIGHT_ON_LEVEL 1
 #define EXAMPLE_LCD_BK_LIGHT_OFF_LEVEL !EXAMPLE_LCD_BK_LIGHT_ON_LEVEL
@@ -46,8 +58,11 @@ void lvgl_setup();
 void display_meter();
 void display_window();
 void display_image();
+void display_color_wheel();
 
 
+void bsp_display_unlock(void);
+bool bsp_display_lock(uint32_t timeout_ms);
 
 
 
