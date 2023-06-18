@@ -3,7 +3,8 @@
 
 #include "lvgl.h"
 
-void ui_Screen1_screen_init(void);
-void Create_main_display(void);
+void ui_Mainscreen_screen_init(void);
+void Display_main();
+void set_temperature(float temperature);
 
 #endif

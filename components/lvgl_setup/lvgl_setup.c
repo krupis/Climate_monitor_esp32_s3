@@ -278,6 +278,7 @@ void lvgl_setup()
     disp_drv.flush_cb = example_lvgl_flush_cb;
     disp_drv.draw_buf = &disp_buf;
     disp_drv.user_data = panel_handle;
+    disp_drv.sw_rotate = 1;
     lv_disp_t *disp = lv_disp_drv_register(&disp_drv);
 
     ESP_LOGI(TAG, "Install LVGL tick timer");
@@ -412,9 +413,10 @@ void display_image()
 
 void display_color_wheel(){
     //ui_colorwheel_screen = lv_obj_create(NULL);
-    ui_colorwheel_screen = lv_obj_create(lv_scr_act());
-    lv_obj_clear_flag(ui_colorwheel_screen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    ui_Colorwheel1 = lv_colorwheel_create(ui_colorwheel_screen, true);
+    //ui_colorwheel_screen = lv_obj_create(lv_scr_act());
+    //lv_obj_clear_flag(ui_colorwheel_screen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    //ui_Colorwheel1 = lv_colorwheel_create(ui_colorwheel_screen, true);
+    ui_Colorwheel1 = lv_colorwheel_create(lv_scr_act(),true);
     lv_obj_set_width(ui_Colorwheel1, 140);
     lv_obj_set_height(ui_Colorwheel1, 140);
     lv_obj_set_align(ui_Colorwheel1, LV_ALIGN_CENTER);

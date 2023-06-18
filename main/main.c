@@ -15,6 +15,7 @@
 #include "lvgl_setup.h"
 #include "lvgl_water_droplet.h"
 #include "UART0.h"
+#include "SHT40.h"
 
 static const char *TAG = "main";
 extern lv_obj_t * ui_Water;
@@ -65,9 +66,12 @@ void app_main(void)
     // display_image();
     // display_window();
     bsp_display_lock(0);
-    display_color_wheel();
+    //display_color_wheel();
+    Display_main();
     bsp_display_unlock();
 
+
+    set_temperature(22);
 
     //Create_main_display();  
 
@@ -78,8 +82,8 @@ void app_main(void)
     // vTaskDelay(4000/portTICK_PERIOD_MS);
     // Move_water_up_down(ui_Water,0,97,70);
 
-
-    //xTaskCreate(UART0_task,"UART0_task",10000,NULL,5,NULL); // receiving commands from main uart
+    xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
+    xTaskCreate(UART0_task,"UART0_task",10000,NULL,5,NULL); // receiving commands from main uart
     //xTaskCreate(Monitoring_task,"Monitoring_task",10000,NULL,5,NULL); // receiving commands from main uart
 }
 
