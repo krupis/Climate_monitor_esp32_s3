@@ -1,0 +1,10 @@
+SET(SOURCES screens/ui_Screen1.c
+    screens/ui_Screen2.c
+    screens/ui_Screen3.c
+    ui.c
+    ui_helpers.c
+    images/ui_img_droplet_png.c
+    images/ui_img_thermometer_png.c
+    images/ui_img_co2_png.c)
+
+add_library(ui ${SOURCES})
