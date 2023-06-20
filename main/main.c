@@ -65,25 +65,24 @@ void app_main(void)
     // bsp_display_unlock();
     // display_image();
     // display_window();
-    bsp_display_lock(0);
     //display_color_wheel();
+
+    bsp_display_lock(0);
     Display_main();
+    set_temperature(22.3);
     bsp_display_unlock();
 
 
-    set_temperature(22);
+    
 
     //Create_main_display();  
 
-    // vTaskDelay(4000/portTICK_PERIOD_MS);
-    // Move_water_up_down(ui_Water,0,97,70);
-    // vTaskDelay(4000/portTICK_PERIOD_MS);
-    // Move_water_up_down(ui_Water,0,70,97);
-    // vTaskDelay(4000/portTICK_PERIOD_MS);
-    // Move_water_up_down(ui_Water,0,97,70);
+
 
     xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
     xTaskCreate(UART0_task,"UART0_task",10000,NULL,5,NULL); // receiving commands from main uart
+    xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
+
     //xTaskCreate(Monitoring_task,"Monitoring_task",10000,NULL,5,NULL); // receiving commands from main uart
 }
 

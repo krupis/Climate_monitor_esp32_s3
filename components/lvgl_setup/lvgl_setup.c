@@ -12,7 +12,7 @@
 #define BSP_NULL_CHECK(x, ret)           assert(x)
 static SemaphoreHandle_t lvgl_mux;                  // LVGL mutex
 static SemaphoreHandle_t touch_mux;                 // Touch mutex
-#define USE_TOUCH_DISPLAY 0
+#define USE_TOUCH_DISPLAY 1
 
 
 static const char *TAG = "LVGL_SETUP";
@@ -240,7 +240,7 @@ void lvgl_setup()
                 .interrupt = 0,
             },
             .flags = {
-                .swap_xy = 0,
+                .swap_xy = 1,
                 .mirror_x = 0,
                 .mirror_y = 0,
             },
