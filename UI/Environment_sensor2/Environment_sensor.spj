@@ -260,7 +260,7 @@
                     "nid": 462917407,
                     "strtype": "ARC/Range",
                     "intarray": [
-                      0,
+                      -40,
                       100
                     ],
                     "InheritedType": 7
@@ -365,7 +365,7 @@
                       {
                         "nid": 811259729,
                         "strtype": "_custom/name",
-                        "strval": "Temp",
+                        "strval": "TempEvent",
                         "InheritedType": 10
                       },
                       {
@@ -1649,7 +1649,7 @@
                       {
                         "nid": 788026259,
                         "strtype": "_custom/name",
-                        "strval": "Temp",
+                        "strval": "HumidityEvent",
                         "InheritedType": 10
                       },
                       {
@@ -1702,7 +1702,7 @@
                           {
                             "nid": 2014719876,
                             "strtype": "SET TEXT VALUE FROM ARC/Postfix",
-                            "strval": "°",
+                            "strval": "%",
                             "InheritedType": 10
                           }
                         ],
@@ -2933,7 +2933,7 @@
                       {
                         "nid": -1850166070,
                         "strtype": "_custom/name",
-                        "strval": "Temp",
+                        "strval": "CO2Event",
                         "InheritedType": 10
                       },
                       {
@@ -2986,7 +2986,7 @@
                           {
                             "nid": 1773293356,
                             "strtype": "SET TEXT VALUE FROM ARC/Postfix",
-                            "strval": "°",
+                            "strval": "\\nppm",
                             "InheritedType": 10
                           }
                         ],
@@ -4079,7 +4079,7 @@
     "theme_color2": 0,
     "exportFolderPath": "D:\\Programming\\ESP32\\Climate_monitor\\Climate_monitor_esp32_s3\\UI\\Environment_sensor2",
     "projectExportFolderPath": "",
-    "backup_cnt": 9,
+    "backup_cnt": 10,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",
