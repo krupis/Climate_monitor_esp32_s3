@@ -9,12 +9,14 @@
 #include "ui_helpers.h"
 #include "lvgl.h"
 #include "lvgl_water_droplet.h"
+#include "SHT40.h"
 
 
 
 LV_IMG_DECLARE(Droplet)
 LV_IMG_DECLARE(Thermometer)
 
+extern QueueHandle_t update_queue;
 
 
 
@@ -30,8 +32,18 @@ lv_obj_t * ui____initial_actions0;
 
 
 void set_temperature(float temperature){
-    char temp_buf[10];
-    lv_textarea_set_text(ui_TemperatureText, "22");
+    char temp_buf[8];
+    sprintf(temp_buf, "%.1f", temperature);//make the number into string using sprintf function
+    strcat(temp_buf,"°");
+    //printf("temp buf = %s \n",temp_buf);
+    lv_textarea_set_text(ui_TemperatureText, temp_buf);
+}
+
+void set_humidity(float humidity){
+    char temp_buf[8];
+    sprintf(temp_buf, "%.1f", humidity);//make the number into string using sprintf function
+    strcat(temp_buf,"%");
+    lv_textarea_set_text(ui_HumidityText, temp_buf);
 }
 
 
@@ -89,12 +101,12 @@ void ui_Mainscreen_screen_init(void)
     ui_TemperatureText = lv_textarea_create(ui_Text_group);
     lv_obj_set_width(ui_TemperatureText, 87);
     lv_obj_set_height(ui_TemperatureText, 70);
-    lv_obj_set_x(ui_TemperatureText, -3);
+    lv_obj_set_x(ui_TemperatureText, 0);
     lv_obj_set_y(ui_TemperatureText, -29);
     lv_obj_set_align(ui_TemperatureText, LV_ALIGN_CENTER);
     lv_textarea_set_text(ui_TemperatureText, "+23°");
     lv_textarea_set_placeholder_text(ui_TemperatureText, "Placeholder...");
-    lv_obj_set_style_text_font(ui_TemperatureText, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_TemperatureText, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_TemperatureText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_TemperatureText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_color(ui_TemperatureText, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -103,12 +115,12 @@ void ui_Mainscreen_screen_init(void)
     ui_HumidityText = lv_textarea_create(ui_Text_group);
     lv_obj_set_width(ui_HumidityText, 87);
     lv_obj_set_height(ui_HumidityText, 70);
-    lv_obj_set_x(ui_HumidityText, 1);
+    lv_obj_set_x(ui_HumidityText, 0);
     lv_obj_set_y(ui_HumidityText, 74);
     lv_obj_set_align(ui_HumidityText, LV_ALIGN_CENTER);
     lv_textarea_set_text(ui_HumidityText, "70%");
     lv_textarea_set_placeholder_text(ui_HumidityText, "Placeholder...");
-    lv_obj_set_style_text_font(ui_HumidityText, &lv_font_montserrat_36, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_HumidityText, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_HumidityText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_HumidityText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_color(ui_HumidityText, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -127,4 +139,26 @@ void Display_main(){
     ui_Mainscreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_Screen1);
+
+    
+
+}
+
+
+void Update_temp_humidity(void* arg){
+    struct sht40_reading_s local_sht40;
+    struct sht40_reading_s average_sht40;
+    
+    for(;;) {
+        if(xQueueReceive(update_queue, &local_sht40, portMAX_DELAY)) { 
+            average_sht40.temperature += local_sht40.temperature;
+            average_sht40.humidity += local_sht40.humidity;
+            
+            bsp_display_lock(0);
+            set_temperature(local_sht40.temperature);
+            set_humidity(local_sht40.humidity);
+            bsp_display_unlock();
+            //vTaskDelay(100/portTICK_PERIOD_MS);
+        }
+    }
 }
