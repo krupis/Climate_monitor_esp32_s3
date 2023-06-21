@@ -229,10 +229,27 @@ void lvgl_setup()
         ESP_LOGI(TAG,"esp_lcd_new_panel_io_i2c");
         ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
 
+        //if display is rotated 270 degrees
+        //     esp_lcd_touch_config_t tp_cfg = {
+        //     .x_max = 170,
+        //     .y_max = 320,
+        //     .rst_gpio_num = 21,
+        //     .int_gpio_num = 16,
+        //     .levels = {
+        //         .reset = 0,
+        //         .interrupt = 0,
+        //     },
+        //     .flags = {
+        //         .swap_xy = 1,
+        //         .mirror_x = 0,
+        //         .mirror_y = 1,
+        //     },
+        //     .interrupt_callback = touch_callback,
+        // };
 
             esp_lcd_touch_config_t tp_cfg = {
-            .x_max = 320,
-            .y_max = 170,
+            .x_max = 170,
+            .y_max = 320,
             .rst_gpio_num = 21,
             .int_gpio_num = 16,
             .levels = {

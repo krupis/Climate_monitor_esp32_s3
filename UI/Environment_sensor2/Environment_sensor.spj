@@ -50,7 +50,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -60,8 +60,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      80,
-                      80
+                      90,
+                      90
                     ],
                     "InheritedType": 7
                   },
@@ -253,6 +253,7 @@
                   },
                   {
                     "nid": -1932168166,
+                    "flags": 1048576,
                     "strtype": "ARC/Arc",
                     "InheritedType": 1
                   },
@@ -300,20 +301,9 @@
                         "strval": "DEFAULT",
                         "childs": [
                           {
-                            "nid": 617295192,
-                            "strtype": "_style/Arc_Color",
-                            "intarray": [
-                              179,
-                              179,
-                              229,
-                              255
-                            ],
-                            "InheritedType": 7
-                          },
-                          {
                             "nid": -810617871,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
                           }
                         ],
@@ -336,8 +326,14 @@
                           {
                             "nid": -1586785595,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
+                          },
+                          {
+                            "nid": -883224287,
+                            "strtype": "_style/Arc_Image",
+                            "strval": "assets\\blue_yellow_red2.png",
+                            "InheritedType": 5
                           }
                         ],
                         "InheritedType": 1
@@ -350,82 +346,31 @@
                   },
                   {
                     "part": "lv.PART.KNOB",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": 1163205668,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": -1291945980,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              255,
+                              255,
+                              255,
+                              0
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": 1554004762,
                     "strtype": "ARC/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
-                  },
-                  {
-                    "disabled": false,
-                    "nid": -1051892049,
-                    "strtype": "_event/EventHandler",
-                    "strval": "VALUE_CHANGED",
-                    "childs": [
-                      {
-                        "nid": 811259729,
-                        "strtype": "_custom/name",
-                        "strval": "TempEvent",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 688153673,
-                        "strtype": "_custom/condition_C",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 169953004,
-                        "strtype": "_custom/condition_P",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 1665410734,
-                        "strtype": "_event/action",
-                        "strval": "SET TEXT VALUE FROM ARC",
-                        "childs": [
-                          {
-                            "nid": -837593278,
-                            "strtype": "SET TEXT VALUE FROM ARC/Name",
-                            "strval": "SET TEXT VALUE FROM ARC",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": -284449234,
-                            "strtype": "SET TEXT VALUE FROM ARC/Call",
-                            "strval": "SetTextValueArc( <{Target}>, event_struct.get_target(), \"<{Prefix}>\", \"<{Postfix}>\")",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 274191592,
-                            "strtype": "SET TEXT VALUE FROM ARC/CallC",
-                            "strval": "_ui_arc_set_text_value( <{Target}>, target, \"<{Prefix}>\", \"<{Postfix}>\");",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 998526849,
-                            "strtype": "SET TEXT VALUE FROM ARC/Target",
-                            "strval": "GUID16225845-141916S2552171",
-                            "InheritedType": 9
-                          },
-                          {
-                            "nid": 1437348142,
-                            "strtype": "SET TEXT VALUE FROM ARC/Prefix",
-                            "strval": "",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 1761505617,
-                            "strtype": "SET TEXT VALUE FROM ARC/Postfix",
-                            "strval": "°",
-                            "InheritedType": 10
-                          }
-                        ],
-                        "InheritedType": 10
-                      }
-                    ],
-                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "ARC",
@@ -470,7 +415,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -699,7 +644,7 @@
                   {
                     "nid": 1606507590,
                     "strtype": "IMAGE/Scale",
-                    "integer": 100,
+                    "integer": 125,
                     "InheritedType": 6
                   },
                   {
@@ -711,7 +656,8 @@
                     "InheritedType": 11
                   }
                 ],
-                "saved_objtypeKey": "IMAGE"
+                "saved_objtypeKey": "IMAGE",
+                "tree_closed": true
               },
               {
                 "guid": "GUID16225845-141916S2552171",
@@ -752,8 +698,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      40,
-                      0
+                      0,
+                      -65
                     ],
                     "InheritedType": 7
                   },
@@ -967,7 +913,7 @@
                   {
                     "nid": -2043450647,
                     "strtype": "LABEL/Text",
-                    "strval": "24.5°",
+                    "strval": "+24.5°",
                     "InheritedType": 10
                   },
                   {
@@ -1040,8 +986,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  0,
-                  -100
+                  -105,
+                  0
                 ],
                 "InheritedType": 7
               },
@@ -1050,8 +996,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  160,
-                  100
+                  105,
+                  160
                 ],
                 "InheritedType": 7
               },
@@ -1267,7 +1213,7 @@
                           0,
                           0,
                           0,
-                          0
+                          55
                         ],
                         "InheritedType": 7
                       }
@@ -1334,7 +1280,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -1344,8 +1290,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      80,
-                      80
+                      90,
+                      90
                     ],
                     "InheritedType": 7
                   },
@@ -1584,20 +1530,9 @@
                         "strval": "DEFAULT",
                         "childs": [
                           {
-                            "nid": 220334138,
-                            "strtype": "_style/Arc_Color",
-                            "intarray": [
-                              179,
-                              179,
-                              229,
-                              255
-                            ],
-                            "InheritedType": 7
-                          },
-                          {
                             "nid": 1528272167,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
                           }
                         ],
@@ -1620,8 +1555,14 @@
                           {
                             "nid": 2076959376,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
+                          },
+                          {
+                            "nid": -1023151599,
+                            "strtype": "_style/Arc_Image",
+                            "strval": "assets\\Water.png",
+                            "InheritedType": 5
                           }
                         ],
                         "InheritedType": 1
@@ -1634,82 +1575,31 @@
                   },
                   {
                     "part": "lv.PART.KNOB",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": -2100981383,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": -1504884612,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              255,
+                              255,
+                              255,
+                              0
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": -572609767,
                     "strtype": "ARC/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
-                  },
-                  {
-                    "disabled": false,
-                    "nid": -1910119123,
-                    "strtype": "_event/EventHandler",
-                    "strval": "VALUE_CHANGED",
-                    "childs": [
-                      {
-                        "nid": 788026259,
-                        "strtype": "_custom/name",
-                        "strval": "HumidityEvent",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -92934765,
-                        "strtype": "_custom/condition_C",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -874600094,
-                        "strtype": "_custom/condition_P",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 712254814,
-                        "strtype": "_event/action",
-                        "strval": "SET TEXT VALUE FROM ARC",
-                        "childs": [
-                          {
-                            "nid": 1522902262,
-                            "strtype": "SET TEXT VALUE FROM ARC/Name",
-                            "strval": "SET TEXT VALUE FROM ARC",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 1479786383,
-                            "strtype": "SET TEXT VALUE FROM ARC/Call",
-                            "strval": "SetTextValueArc( <{Target}>, event_struct.get_target(), \"<{Prefix}>\", \"<{Postfix}>\")",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 1311716173,
-                            "strtype": "SET TEXT VALUE FROM ARC/CallC",
-                            "strval": "_ui_arc_set_text_value( <{Target}>, target, \"<{Prefix}>\", \"<{Postfix}>\");",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 76477874,
-                            "strtype": "SET TEXT VALUE FROM ARC/Target",
-                            "strval": "GUID47412270-146624S2612171",
-                            "InheritedType": 9
-                          },
-                          {
-                            "nid": -1074457703,
-                            "strtype": "SET TEXT VALUE FROM ARC/Prefix",
-                            "strval": "",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 2014719876,
-                            "strtype": "SET TEXT VALUE FROM ARC/Postfix",
-                            "strval": "%",
-                            "InheritedType": 10
-                          }
-                        ],
-                        "InheritedType": 10
-                      }
-                    ],
-                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "ARC",
@@ -1754,7 +1644,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -1983,7 +1873,7 @@
                   {
                     "nid": -412413267,
                     "strtype": "IMAGE/Scale",
-                    "integer": 100,
+                    "integer": 125,
                     "InheritedType": 6
                   },
                   {
@@ -2036,8 +1926,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      40,
-                      0
+                      0,
+                      -65
                     ],
                     "InheritedType": 7
                   },
@@ -2334,8 +2224,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  160,
-                  100
+                  105,
+                  160
                 ],
                 "InheritedType": 7
               },
@@ -2534,24 +2424,13 @@
                     "strval": "DEFAULT",
                     "childs": [
                       {
-                        "nid": 953866741,
-                        "strtype": "_style/Bg_Color",
-                        "intarray": [
-                          255,
-                          255,
-                          255,
-                          0
-                        ],
-                        "InheritedType": 7
-                      },
-                      {
                         "nid": -1816370286,
                         "strtype": "_style/Border_Color",
                         "intarray": [
                           0,
                           0,
                           0,
-                          0
+                          55
                         ],
                         "InheritedType": 7
                       }
@@ -2618,7 +2497,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -2628,8 +2507,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Size",
                     "intarray": [
-                      80,
-                      80
+                      90,
+                      90
                     ],
                     "InheritedType": 7
                   },
@@ -2868,20 +2747,9 @@
                         "strval": "DEFAULT",
                         "childs": [
                           {
-                            "nid": -1073790067,
-                            "strtype": "_style/Arc_Color",
-                            "intarray": [
-                              179,
-                              179,
-                              229,
-                              255
-                            ],
-                            "InheritedType": 7
-                          },
-                          {
                             "nid": 1393285477,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
                           }
                         ],
@@ -2904,8 +2772,14 @@
                           {
                             "nid": -1483151994,
                             "strtype": "_style/Arc_Width",
-                            "integer": 5,
+                            "integer": 10,
                             "InheritedType": 6
+                          },
+                          {
+                            "nid": 2022586129,
+                            "strtype": "_style/Arc_Image",
+                            "strval": "assets\\co2_arc.png",
+                            "InheritedType": 5
                           }
                         ],
                         "InheritedType": 1
@@ -2918,82 +2792,31 @@
                   },
                   {
                     "part": "lv.PART.KNOB",
-                    "childs": [],
+                    "childs": [
+                      {
+                        "nid": 1660401617,
+                        "strtype": "_style/StyleState",
+                        "strval": "DEFAULT",
+                        "childs": [
+                          {
+                            "nid": -2009380906,
+                            "strtype": "_style/Bg_Color",
+                            "intarray": [
+                              255,
+                              255,
+                              255,
+                              0
+                            ],
+                            "InheritedType": 7
+                          }
+                        ],
+                        "InheritedType": 1
+                      }
+                    ],
                     "nid": 707356374,
                     "strtype": "ARC/Style_knob",
                     "strval": "lv.PART.KNOB, Rectangle, Pad",
                     "InheritedType": 11
-                  },
-                  {
-                    "disabled": false,
-                    "nid": -1794182456,
-                    "strtype": "_event/EventHandler",
-                    "strval": "VALUE_CHANGED",
-                    "childs": [
-                      {
-                        "nid": -1850166070,
-                        "strtype": "_custom/name",
-                        "strval": "CO2Event",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -517730394,
-                        "strtype": "_custom/condition_C",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": 369725429,
-                        "strtype": "_custom/condition_P",
-                        "strval": "",
-                        "InheritedType": 10
-                      },
-                      {
-                        "nid": -127905433,
-                        "strtype": "_event/action",
-                        "strval": "SET TEXT VALUE FROM ARC",
-                        "childs": [
-                          {
-                            "nid": -1840598036,
-                            "strtype": "SET TEXT VALUE FROM ARC/Name",
-                            "strval": "SET TEXT VALUE FROM ARC",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 395744718,
-                            "strtype": "SET TEXT VALUE FROM ARC/Call",
-                            "strval": "SetTextValueArc( <{Target}>, event_struct.get_target(), \"<{Prefix}>\", \"<{Postfix}>\")",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": -1965476380,
-                            "strtype": "SET TEXT VALUE FROM ARC/CallC",
-                            "strval": "_ui_arc_set_text_value( <{Target}>, target, \"<{Prefix}>\", \"<{Postfix}>\");",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 69688417,
-                            "strtype": "SET TEXT VALUE FROM ARC/Target",
-                            "strval": "GUID55193623-149185S2652171",
-                            "InheritedType": 9
-                          },
-                          {
-                            "nid": 146991007,
-                            "strtype": "SET TEXT VALUE FROM ARC/Prefix",
-                            "strval": "",
-                            "InheritedType": 10
-                          },
-                          {
-                            "nid": 1773293356,
-                            "strtype": "SET TEXT VALUE FROM ARC/Postfix",
-                            "strval": "\\nppm",
-                            "InheritedType": 10
-                          }
-                        ],
-                        "InheritedType": 10
-                      }
-                    ],
-                    "InheritedType": 4
                   }
                 ],
                 "saved_objtypeKey": "ARC",
@@ -3038,7 +2861,7 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      -40,
+                      0,
                       0
                     ],
                     "InheritedType": 7
@@ -3267,7 +3090,7 @@
                   {
                     "nid": -559232683,
                     "strtype": "IMAGE/Scale",
-                    "integer": 100,
+                    "integer": 125,
                     "InheritedType": 6
                   },
                   {
@@ -3320,8 +3143,8 @@
                     "flags": 17,
                     "strtype": "OBJECT/Position",
                     "intarray": [
-                      40,
-                      0
+                      0,
+                      -60
                     ],
                     "InheritedType": 7
                   },
@@ -3535,7 +3358,7 @@
                   {
                     "nid": 270212683,
                     "strtype": "LABEL/Text",
-                    "strval": "500\\nppm",
+                    "strval": "1000",
                     "InheritedType": 10
                   },
                   {
@@ -3608,8 +3431,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  0,
-                  100
+                  105,
+                  0
                 ],
                 "InheritedType": 7
               },
@@ -3618,8 +3441,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Size",
                 "intarray": [
-                  160,
-                  100
+                  105,
+                  160
                 ],
                 "InheritedType": 7
               },
@@ -3835,7 +3658,7 @@
                           0,
                           0,
                           0,
-                          0
+                          55
                         ],
                         "InheritedType": 7
                       }
@@ -4059,9 +3882,9 @@
   "info": {
     "name": "Environment_sensor.spj",
     "depth": 2,
-    "width": 170,
-    "height": 320,
-    "rotation": 90,
+    "width": 320,
+    "height": 170,
+    "rotation": 0,
     "offset_x": 0,
     "offset_y": 0,
     "shape": "RECTANGLE",
@@ -4077,9 +3900,9 @@
     "theme_dark": false,
     "theme_color1": 5,
     "theme_color2": 0,
-    "exportFolderPath": "D:\\Programming\\ESP32\\Climate_monitor\\Climate_monitor_esp32_s3\\UI\\Environment_sensor2",
+    "exportFolderPath": "C:\\Users\\petrikas.lu\\Desktop\\WORK\\ESP32\\Climate_monitor_esp32_s3\\UI\\Environment_sensor3",
     "projectExportFolderPath": "",
-    "backup_cnt": 10,
+    "backup_cnt": 20,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "C_FILE",

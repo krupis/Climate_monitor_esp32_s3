@@ -26,6 +26,7 @@
         "random": "c",
         "esp_lcd_panel_ops.h": "c",
         "sstream": "c",
-        "regex": "c"
+        "regex": "c",
+        "functional": "c"
     }
 }

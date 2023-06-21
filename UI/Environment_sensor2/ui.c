@@ -8,58 +8,24 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-lv_obj_t * ui_Screen1;
-lv_obj_t * ui_Icon_group;
-lv_obj_t * ui_Droplet;
-lv_obj_t * ui_Thermometer;
-lv_obj_t * ui_Text_group;
-lv_obj_t * ui_TemperatureText;
-lv_obj_t * ui_HumidityText;
-
-// SCREEN: ui_Screen2
-void ui_Screen2_screen_init(void);
-lv_obj_t * ui_Screen2;
+// SCREEN: ui_MainScreen
+void ui_MainScreen_screen_init(void);
+lv_obj_t * ui_MainScreen;
 lv_obj_t * ui_TemperatureGroup;
-void ui_event_TemperatureArc(lv_event_t * e);
 lv_obj_t * ui_TemperatureArc;
-lv_obj_t * ui_Thermometer1;
+lv_obj_t * ui_Thermometer;
 lv_obj_t * ui_TemperatureLabel;
 lv_obj_t * ui_HumidityGroup;
-lv_obj_t * ui_Droplet1;
-lv_obj_t * ui_Arc1;
-lv_obj_t * ui_TemperatureGroup1;
-void ui_event_TemperatureArc1(lv_event_t * e);
-lv_obj_t * ui_TemperatureArc1;
-lv_obj_t * ui_Thermometer2;
-lv_obj_t * ui_TemperatureLabel1;
-lv_obj_t * ui_TemperatureGroup2;
-void ui_event_TemperatureArc2(lv_event_t * e);
-lv_obj_t * ui_TemperatureArc2;
-lv_obj_t * ui_Thermometer3;
-lv_obj_t * ui_TemperatureLabel2;
-
-// SCREEN: ui_Screen3
-void ui_Screen3_screen_init(void);
-lv_obj_t * ui_Screen3;
-lv_obj_t * ui_TemperatureGroup3;
-void ui_event_TemperatureArc3(lv_event_t * e);
-lv_obj_t * ui_TemperatureArc3;
-lv_obj_t * ui_Thermometer4;
-lv_obj_t * ui_TemperatureLabel3;
-lv_obj_t * ui_TemperatureGroup4;
-void ui_event_TemperatureArc4(lv_event_t * e);
-lv_obj_t * ui_TemperatureArc4;
-lv_obj_t * ui_Thermometer5;
-lv_obj_t * ui_TemperatureLabel4;
-lv_obj_t * ui_TemperatureGroup5;
-void ui_event_TemperatureArc5(lv_event_t * e);
-lv_obj_t * ui_TemperatureArc5;
-lv_obj_t * ui_Thermometer6;
-lv_obj_t * ui_TemperatureLabel5;
+lv_obj_t * ui_HumidityArc;
+lv_obj_t * ui_Droplet;
+lv_obj_t * ui_DropletLabel;
+lv_obj_t * ui_CO2Group;
+lv_obj_t * ui_CO2Arc;
+lv_obj_t * ui_CO2;
+lv_obj_t * ui_CO2Label;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_co[1] = {&ui_img_co2_png};
+const lv_img_dsc_t * ui_imgset_blue_yellow_red[1] = {&ui_img_blue_yellow_red2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -72,54 +38,6 @@ const lv_img_dsc_t * ui_imgset_co[1] = {&ui_img_co2_png};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_TemperatureArc(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel, target, "", "°");
-    }
-}
-void ui_event_TemperatureArc1(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel1, target, "", "°");
-    }
-}
-void ui_event_TemperatureArc2(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel2, target, "", "°");
-    }
-}
-void ui_event_TemperatureArc3(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel3, target, "", "°");
-    }
-}
-void ui_event_TemperatureArc4(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel4, target, "", "°");
-    }
-}
-void ui_event_TemperatureArc5(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_VALUE_CHANGED) {
-        _ui_arc_set_text_value(ui_TemperatureLabel5, target, "", "°");
-    }
-}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -129,9 +47,7 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Screen1_screen_init();
-    ui_Screen2_screen_init();
-    ui_Screen3_screen_init();
+    ui_MainScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_Screen1);
+    lv_disp_load_scr(ui_MainScreen);
 }

@@ -69,10 +69,20 @@ void app_main(void)
 
     bsp_display_lock(0);
     Display_main();
-    set_temperature(22.3);
     bsp_display_unlock();
 
+    // char result[100];
+    // const char *middle = "example";
 
+    // // the snprintf solution
+    // snprintf(result, sizeof result, "<%s>", middle);
+
+    // // the strcat solution
+    // result[0] = '\0';
+    // strcat(result, "<");
+    // strcat(result, middle);
+    // strcat(result, ">");
+    // printf("result = %s \n",result);
     
 
     //Create_main_display();  

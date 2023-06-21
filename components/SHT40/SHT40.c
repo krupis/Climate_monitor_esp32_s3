@@ -67,7 +67,7 @@ void SHT40_task(void *argument)
   	for (;;)
 	{	
         Measure_temp_humidity(SHT40_TEMP_HUMID_REG_HIGH_PREC);
-		vTaskDelay(500/portTICK_PERIOD_MS);
+		vTaskDelay(100/portTICK_PERIOD_MS);
     }
 
 }
