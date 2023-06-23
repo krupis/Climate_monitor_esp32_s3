@@ -68,7 +68,8 @@ void app_main(void)
     //display_color_wheel();
 
     bsp_display_lock(0);
-    Display_main();
+    //display_meter();
+    display_widgets();
     bsp_display_unlock();
 
     // char result[100];
@@ -89,26 +90,14 @@ void app_main(void)
 
 
 
-    xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
+    //xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
     xTaskCreate(UART0_task,"UART0_task",10000,NULL,5,NULL); // receiving commands from main uart
-    xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
+    //xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
 
-    //xTaskCreate(Monitoring_task,"Monitoring_task",10000,NULL,5,NULL); // receiving commands from main uart
+    
 }
 
 
 
 
 
-
-// static void Monitoring_task(void *argument){
-//   	for (;;)
-// 	{	
-//         char stats_buffer[1024];
-//         vTaskGetRunTimeStats(stats_buffer);
-//         //printf("Task name    | State | Priority    | Stack       | Number \n");
-//         ESP_LOGI("TASK_MONITORING","%s",stats_buffer);
-//         //printf("%s\n", stats_buffer);
-//         vTaskDelay(5000/portTICK_PERIOD_MS);
-//     }
-// }

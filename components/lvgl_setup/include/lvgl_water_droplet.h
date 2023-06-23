@@ -9,4 +9,9 @@ void Display_main();
 void set_temperature(float temperature);
 void Update_temp_humidity(void* arg);
 
+
+void ui_HomeScreen_screen_init(void);
+void Display_home_screen(void);
+void display_widgets();
+
 #endif
