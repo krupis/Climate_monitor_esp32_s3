@@ -68,7 +68,6 @@ void app_main(void)
     //display_color_wheel();
 
     bsp_display_lock(0);
-    //display_meter();
     display_widgets();
     bsp_display_unlock();
 

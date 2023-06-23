@@ -8,22 +8,6 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-// SCREEN: ui_MainScreen
-void ui_MainScreen_screen_init(void);
-lv_obj_t * ui_MainScreen;
-lv_obj_t * ui_TemperatureGroup;
-lv_obj_t * ui_TemperatureArc;
-lv_obj_t * ui_Thermometer;
-lv_obj_t * ui_TemperatureLabel;
-lv_obj_t * ui_HumidityGroup;
-lv_obj_t * ui_HumidityArc;
-lv_obj_t * ui_Droplet;
-lv_obj_t * ui_DropletLabel;
-lv_obj_t * ui_CO2Group;
-lv_obj_t * ui_CO2Arc;
-lv_obj_t * ui_CO2;
-lv_obj_t * ui_CO2Label;
-
 // SCREEN: ui_TemperatureScreen
 void ui_TemperatureScreen_screen_init(void);
 lv_obj_t * ui_TemperatureScreen;
@@ -32,8 +16,8 @@ lv_obj_t * ui_ThermometerIcon;
 lv_obj_t * ui_TempValue;
 lv_obj_t * ui_HomeIcon;
 lv_obj_t * ui_Label1;
+void ui_event_Image1(lv_event_t * e);
 lv_obj_t * ui_Image1;
-lv_obj_t * ui_ThermometerIcon1;
 
 // SCREEN: ui_TemperatureScreen1
 void ui_TemperatureScreen1_screen_init(void);
@@ -74,6 +58,14 @@ const lv_img_dsc_t * ui_imgset_thermometer[1] = {&ui_img_thermometer2_png};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_Image1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(ui_TemperatureScreen1, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -83,10 +75,9 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_MainScreen_screen_init();
     ui_TemperatureScreen_screen_init();
     ui_TemperatureScreen1_screen_init();
     ui_TemperatureScreen2_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_MainScreen);
+    lv_disp_load_scr(ui_TemperatureScreen);
 }

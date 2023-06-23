@@ -72,17 +72,9 @@ void ui_TemperatureScreen_screen_init(void)
     lv_obj_set_x(ui_Image1, -116);
     lv_obj_set_y(ui_Image1, -54);
     lv_obj_set_align(ui_Image1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_Image1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_ThermometerIcon1 = lv_img_create(ui_TemperatureScreen);
-    lv_img_set_src(ui_ThermometerIcon1, &ui_img_thermometer2_png);
-    lv_obj_set_width(ui_ThermometerIcon1, LV_SIZE_CONTENT);   /// 106
-    lv_obj_set_height(ui_ThermometerIcon1, LV_SIZE_CONTENT);    /// 102
-    lv_obj_set_x(ui_ThermometerIcon1, 15);
-    lv_obj_set_y(ui_ThermometerIcon1, 29);
-    lv_obj_set_align(ui_ThermometerIcon1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_ThermometerIcon1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_ThermometerIcon1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_event_cb(ui_Image1, ui_event_Image1, LV_EVENT_ALL, NULL);
 
 }

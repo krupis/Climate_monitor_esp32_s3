@@ -14,21 +14,6 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
-// SCREEN: ui_MainScreen
-void ui_MainScreen_screen_init(void);
-extern lv_obj_t * ui_MainScreen;
-extern lv_obj_t * ui_TemperatureGroup;
-extern lv_obj_t * ui_TemperatureArc;
-extern lv_obj_t * ui_Thermometer;
-extern lv_obj_t * ui_TemperatureLabel;
-extern lv_obj_t * ui_HumidityGroup;
-extern lv_obj_t * ui_HumidityArc;
-extern lv_obj_t * ui_Droplet;
-extern lv_obj_t * ui_DropletLabel;
-extern lv_obj_t * ui_CO2Group;
-extern lv_obj_t * ui_CO2Arc;
-extern lv_obj_t * ui_CO2;
-extern lv_obj_t * ui_CO2Label;
 // SCREEN: ui_TemperatureScreen
 void ui_TemperatureScreen_screen_init(void);
 extern lv_obj_t * ui_TemperatureScreen;
@@ -37,8 +22,8 @@ extern lv_obj_t * ui_ThermometerIcon;
 extern lv_obj_t * ui_TempValue;
 extern lv_obj_t * ui_HomeIcon;
 extern lv_obj_t * ui_Label1;
+void ui_event_Image1(lv_event_t * e);
 extern lv_obj_t * ui_Image1;
-extern lv_obj_t * ui_ThermometerIcon1;
 // SCREEN: ui_TemperatureScreen1
 void ui_TemperatureScreen1_screen_init(void);
 extern lv_obj_t * ui_TemperatureScreen1;
@@ -61,18 +46,14 @@ extern lv_obj_t * ui_Image3;
 extern lv_obj_t * ui_ThermometerIcon5;
 extern lv_obj_t * ui____initial_actions0;
 
-LV_IMG_DECLARE(ui_img_blue_yellow_red2_png);    // assets\blue_yellow_red2.png
-LV_IMG_DECLARE(ui_img_thermometer_png);    // assets\Thermometer.png
-LV_IMG_DECLARE(ui_img_water_png);    // assets\Water.png
-LV_IMG_DECLARE(ui_img_droplet_png);    // assets\Droplet.png
-LV_IMG_DECLARE(ui_img_co2_arc_png);    // assets\co2_arc.png
-LV_IMG_DECLARE(ui_img_co2_png);    // assets\co2.png
 LV_IMG_DECLARE(ui_img_main_screen_gradient_dithered_png);    // assets\Main_screen_gradient_dithered.png
 LV_IMG_DECLARE(ui_img_thermometer2_png);    // assets\Thermometer2.png
 LV_IMG_DECLARE(ui_img_home_png);    // assets\home.png
 LV_IMG_DECLARE(ui_img_menu_png);    // assets\menu.png
 LV_IMG_DECLARE(ui_img_main_screen_gradient3_png);    // assets\Main_screen_gradient3.png
 LV_IMG_DECLARE(ui_img_yellow_dithered_png);    // assets\yellow_dithered.png
+LV_IMG_DECLARE(ui_img_blue_yellow_red2_png);    // assets\blue_yellow_red2.png
+LV_IMG_DECLARE(ui_img_co2_png);    // assets\co2.png
 LV_IMG_DECLARE(ui_img_dithered1_png);    // assets\dithered1.png
 LV_IMG_DECLARE(ui_img_main_screen_gradient2_png);    // assets\Main_screen_gradient2.png
 

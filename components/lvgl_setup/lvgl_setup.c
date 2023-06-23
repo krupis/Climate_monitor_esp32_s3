@@ -8,63 +8,57 @@
 #include "freertos/task.h"
 #include "ui_helpers.h"
 
-
-#define BSP_NULL_CHECK(x, ret)           assert(x)
-static SemaphoreHandle_t lvgl_mux;                  // LVGL mutex
-static SemaphoreHandle_t touch_mux;                 // Touch mutex
+#define BSP_NULL_CHECK(x, ret) assert(x)
+static SemaphoreHandle_t lvgl_mux;  // LVGL mutex
+static SemaphoreHandle_t touch_mux; // Touch mutex
 #define USE_TOUCH_DISPLAY 1
-
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
 
-//color wheel
-static lv_obj_t * ui____initial_actions5;
-static lv_obj_t * ui_colorwheel_screen;
-static lv_obj_t * ui_Colorwheel1;
-//end of color wheel
+// color wheel
+static lv_obj_t *ui____initial_actions5;
+static lv_obj_t *ui_colorwheel_screen;
+static lv_obj_t *ui_Colorwheel1;
+// end of color wheel
 
 static lv_obj_t *meter;
-static lv_obj_t *ue_img_logo;
-static lv_obj_t *esp_img_logo;
-LV_IMG_DECLARE(ue_logo)
-LV_IMG_DECLARE(esp_logo)
 
-
-
-static void bsp_touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
+static void bsp_touchpad_read(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     uint16_t touchpad_x[1] = {0};
     uint16_t touchpad_y[1] = {0};
     uint8_t touchpad_cnt = 0;
     /* Read data from touch controller into memory */
-    if (xSemaphoreTake(touch_mux, 0) == pdTRUE) {
+    if (xSemaphoreTake(touch_mux, 0) == pdTRUE)
+    {
         esp_lcd_touch_read_data(drv->user_data);
     }
     /* Get coordinates */
     bool touchpad_pressed = esp_lcd_touch_get_coordinates(drv->user_data, touchpad_x, touchpad_y, NULL, &touchpad_cnt, 1);
-    if (touchpad_pressed && touchpad_cnt > 0) {
+    if (touchpad_pressed && touchpad_cnt > 0)
+    {
         data->point.x = touchpad_x[0];
         data->point.y = touchpad_y[0];
         data->state = LV_INDEV_STATE_PRESSED;
-        printf("data->point.x = %u \n",data->point.x);
-        printf("data->point.y = %u \n",data->point.y);
-    } else {
+        printf("data->point.x = %u \n", data->point.x);
+        printf("data->point.y = %u \n", data->point.y);
+    }
+    else
+    {
         data->state = LV_INDEV_STATE_RELEASED;
     }
 }
-
 
 static void touch_callback(esp_lcd_touch_handle_t tp)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     xSemaphoreGiveFromISR(touch_mux, &xHigherPriorityTaskWoken);
-    if (xHigherPriorityTaskWoken) {
+    if (xHigherPriorityTaskWoken)
+    {
         portYIELD_FROM_ISR();
     }
 }
-
-
 
 static void set_value(void *indic, int32_t v)
 {
@@ -121,7 +115,6 @@ void lvgl_setup()
             .pin_bit_mask = 1ULL << EXAMPLE_PIN_NUM_BK_LIGHT};
     ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
     gpio_set_level(EXAMPLE_PIN_NUM_BK_LIGHT, EXAMPLE_LCD_BK_LIGHT_ON_LEVEL);
-
 
     ESP_LOGI(TAG, "Initialize Intel 8080 bus");
     esp_lcd_i80_bus_handle_t i80_bus = NULL;
@@ -193,95 +186,91 @@ void lvgl_setup()
 
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
-    //CST816 TOUCH TESTING FUNCTION
-    #if USE_TOUCH_DISPLAY
-        esp_lcd_touch_handle_t tp = NULL;
-        esp_lcd_panel_io_handle_t tp_io_handle = NULL;
+// CST816 TOUCH TESTING FUNCTION
+#if USE_TOUCH_DISPLAY
+    esp_lcd_touch_handle_t tp = NULL;
+    esp_lcd_panel_io_handle_t tp_io_handle = NULL;
 
-        i2c_config_t i2c_conf = {
-            .mode = I2C_MODE_MASTER,
-            .sda_io_num = EXAMPLE_I2C_SDA,
-            .scl_io_num = EXAMPLE_I2C_SCL,
-            .sda_pullup_en = GPIO_PULLUP_ENABLE,
-            .scl_pullup_en = GPIO_PULLUP_ENABLE,
-            .master.clk_speed = 400000,
-        };
-        ESP_LOGI(TAG,"Initializing I2C for display touch");
-        /* Initialize I2C */
-        ESP_ERROR_CHECK(i2c_param_config(EXAMPLE_I2C_NUM, &i2c_conf));
-        ESP_ERROR_CHECK(i2c_driver_install(EXAMPLE_I2C_NUM, i2c_conf.mode, 0, 0, 0));
+    i2c_config_t i2c_conf = {
+        .mode = I2C_MODE_MASTER,
+        .sda_io_num = EXAMPLE_I2C_SDA,
+        .scl_io_num = EXAMPLE_I2C_SCL,
+        .sda_pullup_en = GPIO_PULLUP_ENABLE,
+        .scl_pullup_en = GPIO_PULLUP_ENABLE,
+        .master.clk_speed = 400000,
+    };
+    ESP_LOGI(TAG, "Initializing I2C for display touch");
+    /* Initialize I2C */
+    ESP_ERROR_CHECK(i2c_param_config(EXAMPLE_I2C_NUM, &i2c_conf));
+    ESP_ERROR_CHECK(i2c_driver_install(EXAMPLE_I2C_NUM, i2c_conf.mode, 0, 0, 0));
 
-        i2c_cmd_handle_t cmd;
-        for (int i = 0; i < 0x7f; i++) {
-            cmd = i2c_cmd_link_create();
-            i2c_master_start(cmd);
-            i2c_master_write_byte(cmd, (i << 1) | I2C_MASTER_WRITE, true);
-            i2c_master_stop(cmd);
-            if (i2c_master_cmd_begin(EXAMPLE_I2C_NUM, cmd, portMAX_DELAY) == ESP_OK) {
-                ESP_LOGW("I2C_TEST", "%02X", i);
-            }
-            i2c_cmd_link_delete(cmd);
+    i2c_cmd_handle_t cmd;
+    for (int i = 0; i < 0x7f; i++)
+    {
+        cmd = i2c_cmd_link_create();
+        i2c_master_start(cmd);
+        i2c_master_write_byte(cmd, (i << 1) | I2C_MASTER_WRITE, true);
+        i2c_master_stop(cmd);
+        if (i2c_master_cmd_begin(EXAMPLE_I2C_NUM, cmd, portMAX_DELAY) == ESP_OK)
+        {
+            ESP_LOGW("I2C_TEST", "%02X", i);
         }
+        i2c_cmd_link_delete(cmd);
+    }
 
-        esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_CST816S_CONFIG();
+    esp_lcd_panel_io_i2c_config_t tp_io_config = ESP_LCD_TOUCH_IO_I2C_CST816S_CONFIG();
 
+    ESP_LOGI(TAG, "esp_lcd_new_panel_io_i2c");
+    ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
 
-        ESP_LOGI(TAG,"esp_lcd_new_panel_io_i2c");
-        ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
+    // if display is rotated 270 degrees
+    //      esp_lcd_touch_config_t tp_cfg = {
+    //      .x_max = 170,
+    //      .y_max = 320,
+    //      .rst_gpio_num = 21,
+    //      .int_gpio_num = 16,
+    //      .levels = {
+    //          .reset = 0,
+    //          .interrupt = 0,
+    //      },
+    //      .flags = {
+    //          .swap_xy = 1,
+    //          .mirror_x = 0,
+    //          .mirror_y = 1,
+    //      },
+    //      .interrupt_callback = touch_callback,
+    //  };
 
-        //if display is rotated 270 degrees
-        //     esp_lcd_touch_config_t tp_cfg = {
-        //     .x_max = 170,
-        //     .y_max = 320,
-        //     .rst_gpio_num = 21,
-        //     .int_gpio_num = 16,
-        //     .levels = {
-        //         .reset = 0,
-        //         .interrupt = 0,
-        //     },
-        //     .flags = {
-        //         .swap_xy = 1,
-        //         .mirror_x = 0,
-        //         .mirror_y = 1,
-        //     },
-        //     .interrupt_callback = touch_callback,
-        // };
+    esp_lcd_touch_config_t tp_cfg = {
+        .x_max = 170,
+        .y_max = 320,
+        .rst_gpio_num = 21,
+        .int_gpio_num = 16,
+        .levels = {
+            .reset = 0,
+            .interrupt = 0,
+        },
+        .flags = {
+            .swap_xy = 1,
+            .mirror_x = 0,
+            .mirror_y = 1,
+        },
+        .interrupt_callback = touch_callback,
+    };
 
-            esp_lcd_touch_config_t tp_cfg = {
-            .x_max = 170,
-            .y_max = 320,
-            .rst_gpio_num = 21,
-            .int_gpio_num = 16,
-            .levels = {
-                .reset = 0,
-                .interrupt = 0,
-            },
-            .flags = {
-                .swap_xy = 1,
-                .mirror_x = 0,
-                .mirror_y = 0,
-            },
-            .interrupt_callback = touch_callback,
-        };
+    ESP_LOGI(TAG, "esp_lcd_touch_new_i2c_cst816s");
+    esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
+#endif
 
-
-
-        ESP_LOGI(TAG,"esp_lcd_touch_new_i2c_cst816s");
-        esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
-    #endif
-
-    //END OF CST816 TOUCH TESTING FUNCTION
-
+    // END OF CST816 TOUCH TESTING FUNCTION
 
     lv_init();
-
 
     lvgl_mux = xSemaphoreCreateMutex();
     BSP_NULL_CHECK(lvgl_mux, NULL);
 
     touch_mux = xSemaphoreCreateBinary();
     BSP_NULL_CHECK(touch_mux, NULL);
-
 
     // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
     lv_color_t *buf1 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
@@ -307,43 +296,40 @@ void lvgl_setup()
     ESP_ERROR_CHECK(esp_timer_create(&lvgl_tick_timer_args, &lvgl_tick_timer));
     ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, EXAMPLE_LVGL_TICK_PERIOD_MS * 1000));
 
-    #if USE_TOUCH_DISPLAY
-        static lv_indev_drv_t indev_drv;    // Input device driver (Touch)
-        lv_indev_t *indev_touchpad;
-        lv_indev_drv_init(&indev_drv);
-        indev_drv.type = LV_INDEV_TYPE_POINTER;
-        indev_drv.disp = disp;
-        indev_drv.read_cb = bsp_touchpad_read;
-        indev_drv.user_data = tp;
-        indev_touchpad = lv_indev_drv_register(&indev_drv);
-        BSP_NULL_CHECK(indev_touchpad, ESP_ERR_NO_MEM);
-    #endif
+#if USE_TOUCH_DISPLAY
+    static lv_indev_drv_t indev_drv; // Input device driver (Touch)
+    lv_indev_t *indev_touchpad;
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_POINTER;
+    indev_drv.disp = disp;
+    indev_drv.read_cb = bsp_touchpad_read;
+    indev_drv.user_data = tp;
+    indev_touchpad = lv_indev_drv_register(&indev_drv);
+    BSP_NULL_CHECK(indev_touchpad, ESP_ERR_NO_MEM);
+#endif
 
     xTaskCreatePinnedToCore(lvgl_timer_task, "lvgl Timer", 10000, NULL, 4, NULL, 1);
-
 }
-
-
-
-
 
 static void lvgl_timer_task(void *arg)
 {
     ESP_LOGI(TAG, "Starting LVGL task");
-    while (1) {
+    while (1)
+    {
         bsp_display_lock(0);
         uint32_t task_delay_ms = lv_timer_handler();
         bsp_display_unlock();
-        if (task_delay_ms > 500) {
+        if (task_delay_ms > 500)
+        {
             task_delay_ms = 500;
-        } else if (task_delay_ms < 5) {
+        }
+        else if (task_delay_ms < 5)
+        {
             task_delay_ms = 5;
         }
         vTaskDelay(pdMS_TO_TICKS(task_delay_ms));
     }
 }
-
-
 
 bool bsp_display_lock(uint32_t timeout_ms)
 {
@@ -357,7 +343,6 @@ void bsp_display_unlock(void)
     BSP_NULL_CHECK(lvgl_mux, NULL);
     xSemaphoreGive(lvgl_mux);
 }
-
 
 void display_meter()
 {
@@ -414,39 +399,45 @@ void display_window()
     lv_win_add_title(win, "test123!");
 }
 
-void display_image()
+void display_color_wheel()
 {
-    // ue_img_logo = lv_img_create(lv_scr_act());
-    // lv_img_set_src(ue_img_logo, &ue_logo);
-    // lv_obj_center(ue_img_logo);
-
-    esp_img_logo = lv_img_create(lv_scr_act());
-    lv_img_set_src(esp_img_logo, &esp_logo);
-    lv_obj_center(esp_img_logo);
-}
-
-
-
-
-void display_color_wheel(){
-    //ui_colorwheel_screen = lv_obj_create(NULL);
-    //ui_colorwheel_screen = lv_obj_create(lv_scr_act());
-    //lv_obj_clear_flag(ui_colorwheel_screen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    //ui_Colorwheel1 = lv_colorwheel_create(ui_colorwheel_screen, true);
-    ui_Colorwheel1 = lv_colorwheel_create(lv_scr_act(),true);
+    // ui_colorwheel_screen = lv_obj_create(NULL);
+    // ui_colorwheel_screen = lv_obj_create(lv_scr_act());
+    // lv_obj_clear_flag(ui_colorwheel_screen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    // ui_Colorwheel1 = lv_colorwheel_create(ui_colorwheel_screen, true);
+    ui_Colorwheel1 = lv_colorwheel_create(lv_scr_act(), true);
     lv_obj_set_width(ui_Colorwheel1, 140);
     lv_obj_set_height(ui_Colorwheel1, 140);
     lv_obj_set_align(ui_Colorwheel1, LV_ALIGN_CENTER);
     ui____initial_actions5 = lv_obj_create(NULL);
 
-    //lv_disp_load_scr(ui_colorwheel_screen);
-
+    // lv_disp_load_scr(ui_colorwheel_screen);
 }
 
+static void event_handler(lv_event_t *e)
+{
+    printf("event \n");
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t *obj = lv_event_get_target(e);
+    if (code == LV_EVENT_VALUE_CHANGED)
+    {
+        char buf[32];
+        lv_dropdown_get_selected_str(obj, buf, sizeof(buf));
+        LV_LOG_USER("Option: %s", buf);
+    }
+}
 
+void display_dropdown()
+{
+    /*Create a normal drop down list*/
+    lv_obj_t *ddlist = lv_dropdown_create(lv_scr_act());
+    lv_dropdown_set_options(ddlist, "Apple\n"
+                                    "Banana\n"
+                                    "Orange\n"
+                                    "Melon\n"
+                                    "Grape\n"
+                                    "Raspberry");
 
-
-
-
-
-
+    lv_obj_align(ddlist, LV_ALIGN_TOP_MID, 0, 20);
+    lv_obj_add_event_cb(ddlist, event_handler, LV_EVENT_ALL, NULL);
+}

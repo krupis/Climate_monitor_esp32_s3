@@ -59,6 +59,7 @@ void display_meter();
 void display_window();
 void display_image();
 void display_color_wheel();
+void display_dropdown();
 
 
 void bsp_display_unlock(void);
