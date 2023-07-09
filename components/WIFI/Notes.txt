@@ -1,0 +1,15 @@
+Add:
+target_add_binary_data(ELSTAT_ESP_IDF.elf "main/html_file_name.html" TEXT)
+target_add_binary_data(ELSTAT_ESP_IDF.elf "main/action_page.html" TEXT)
+in project global CMakeLists.txt
+for example:
+cmake_minimum_required(VERSION 3.5)
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+project(ELSTAT_ESP_IDF)
+
+target_add_binary_data(ELSTAT_ESP_IDF.elf "main/html_file_name.html" TEXT)
+target_add_binary_data(ELSTAT_ESP_IDF.elf "main/action_page.html" TEXT)
+
+#set_target_properties(${COMPONENT_LIB} PROPERTIES COMPILE_FLAGS -Wno-unused-const-variable)
+idf_build_set_property(COMPILE_OPTIONS "-Wno-unused-variable" APPEND)
+idf_build_set_property(COMPILE_OPTIONS "-Wno-missing-field-initializers" APPEND)

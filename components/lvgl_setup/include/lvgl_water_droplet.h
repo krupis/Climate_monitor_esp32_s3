@@ -14,4 +14,12 @@ void ui_HomeScreen_screen_init(void);
 void Display_home_screen(void);
 void display_widgets();
 
+
+
+
+void ui_MainMenu_screen_init(void);
+void ui_SettingsScreen_screen_init(void);
+void ui_PasswordScreen_screen_init(void);
+void ui_init(void);
+
 #endif

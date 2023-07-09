@@ -61,9 +61,14 @@ void display_image();
 void display_color_wheel();
 void display_dropdown();
 
+void setup_keyboard();
+void Display_keyboard();
+
 
 void bsp_display_unlock(void);
 bool bsp_display_lock(uint32_t timeout_ms);
+
+
 
 
 

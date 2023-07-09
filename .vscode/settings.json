@@ -27,6 +27,7 @@
         "esp_lcd_panel_ops.h": "c",
         "sstream": "c",
         "regex": "c",
-        "functional": "c"
+        "functional": "c",
+        "complex": "c"
     }
 }

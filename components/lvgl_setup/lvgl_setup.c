@@ -441,3 +441,50 @@ void display_dropdown()
     lv_obj_align(ddlist, LV_ALIGN_TOP_MID, 0, 20);
     lv_obj_add_event_cb(ddlist, event_handler, LV_EVENT_ALL, NULL);
 }
+
+lv_obj_t *ui_Screen2;
+lv_obj_t *ui_Keyboard1;
+lv_obj_t *ui_TextArea2;
+
+static void ui_event_Keyboard1(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t *target = lv_event_get_target(e);
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        _ui_keyboard_set_target(ui_Keyboard1, ui_TextArea2);
+    }
+}
+
+void setup_keyboard()
+{
+    ui_Screen2 = lv_obj_create(NULL);
+    lv_obj_clear_flag(ui_Screen2, LV_OBJ_FLAG_SCROLLABLE); /// Flags
+
+    ui_Keyboard1 = lv_keyboard_create(ui_Screen2);
+    lv_obj_set_width(ui_Keyboard1, 300);
+    lv_obj_set_height(ui_Keyboard1, 120);
+    lv_obj_set_x(ui_Keyboard1, 0);
+    lv_obj_set_y(ui_Keyboard1, -19);
+    lv_obj_set_align(ui_Keyboard1, LV_ALIGN_CENTER);
+
+    ui_TextArea2 = lv_textarea_create(ui_Screen2);
+    lv_obj_set_width(ui_TextArea2, 246);
+    lv_obj_set_height(ui_TextArea2, 36);
+    lv_obj_set_x(ui_TextArea2, 3);
+    lv_obj_set_y(ui_TextArea2, 64);
+    lv_obj_set_align(ui_TextArea2, LV_ALIGN_CENTER);
+    lv_textarea_set_placeholder_text(ui_TextArea2, "Placeholder...");
+
+    lv_obj_add_event_cb(ui_Keyboard1, ui_event_Keyboard1, LV_EVENT_ALL, NULL);
+}
+
+void Display_keyboard()
+{
+    lv_disp_t *dispp = lv_disp_get_default();
+    lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
+                                              false, LV_FONT_DEFAULT);
+    lv_disp_set_theme(dispp, theme);
+    setup_keyboard();
+    lv_disp_load_scr(ui_Screen2);
+}

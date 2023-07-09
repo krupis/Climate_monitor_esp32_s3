@@ -14,48 +14,68 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
+// SCREEN: ui_MainMenu
+void ui_MainMenu_screen_init(void);
+extern lv_obj_t * ui_MainMenu;
+extern lv_obj_t * ui_WiFiStatusLabel;
+extern lv_obj_t * ui_IndoorLabel;
+extern lv_obj_t * ui_IndoorLabel1;
+void ui_event_Image1(lv_event_t * e);
+extern lv_obj_t * ui_Image1;
+// SCREEN: ui_SettingsScreen
+void ui_SettingsScreen_screen_init(void);
+extern lv_obj_t * ui_SettingsScreen;
+void ui_event_Dropdown2(lv_event_t * e);
+extern lv_obj_t * ui_Dropdown2;
+extern lv_obj_t * ui_SettingMenu;
+// SCREEN: ui_HumidityScreen
+void ui_HumidityScreen_screen_init(void);
+extern lv_obj_t * ui_HumidityScreen;
+extern lv_obj_t * ui_HumidityLabel;
+extern lv_obj_t * ui_DropletIcon;
+extern lv_obj_t * ui_HumidityValue;
+extern lv_obj_t * ui_HomeIcon;
+extern lv_obj_t * ui_PlaceIcon;
+void ui_event_MenuIcon(lv_event_t * e);
+extern lv_obj_t * ui_MenuIcon;
 // SCREEN: ui_TemperatureScreen
 void ui_TemperatureScreen_screen_init(void);
 extern lv_obj_t * ui_TemperatureScreen;
-extern lv_obj_t * ui_TemperatureLabel1;
-extern lv_obj_t * ui_ThermometerIcon;
+extern lv_obj_t * ui_TemperatureLabel;
 extern lv_obj_t * ui_TempValue;
-extern lv_obj_t * ui_HomeIcon;
-extern lv_obj_t * ui_Label1;
-void ui_event_Image1(lv_event_t * e);
-extern lv_obj_t * ui_Image1;
-// SCREEN: ui_TemperatureScreen1
-void ui_TemperatureScreen1_screen_init(void);
-extern lv_obj_t * ui_TemperatureScreen1;
-extern lv_obj_t * ui_TemperatureLabel2;
-extern lv_obj_t * ui_ThermometerIcon2;
-extern lv_obj_t * ui_TempValue1;
-extern lv_obj_t * ui_HomeIcon1;
-extern lv_obj_t * ui_Label2;
-extern lv_obj_t * ui_Image2;
-extern lv_obj_t * ui_ThermometerIcon3;
-// SCREEN: ui_TemperatureScreen2
-void ui_TemperatureScreen2_screen_init(void);
-extern lv_obj_t * ui_TemperatureScreen2;
-extern lv_obj_t * ui_TemperatureLabel3;
-extern lv_obj_t * ui_ThermometerIcon4;
-extern lv_obj_t * ui_TempValue2;
 extern lv_obj_t * ui_HomeIcon2;
-extern lv_obj_t * ui_Label3;
-extern lv_obj_t * ui_Image3;
-extern lv_obj_t * ui_ThermometerIcon5;
+extern lv_obj_t * ui_PlaceIcon2;
+extern lv_obj_t * ui_MenuIcon2;
+extern lv_obj_t * ui_ThermometerIcon;
+// SCREEN: ui_CO2Screen
+void ui_CO2Screen_screen_init(void);
+extern lv_obj_t * ui_CO2Screen;
+extern lv_obj_t * ui_CO2Label;
+extern lv_obj_t * ui_CO2Icon;
+extern lv_obj_t * ui_CO2Value;
+extern lv_obj_t * ui_HomeIcon3;
+extern lv_obj_t * ui_PlaceLabel3;
+extern lv_obj_t * ui_MenuIcon3;
+// SCREEN: ui_PasswordScreen
+void ui_PasswordScreen_screen_init(void);
+extern lv_obj_t * ui_PasswordScreen;
+void ui_event_PasswordKeyboard(lv_event_t * e);
+extern lv_obj_t * ui_PasswordKeyboard;
+extern lv_obj_t * ui_PasswordTextArea;
+extern lv_obj_t * ui_PasswordConfirmButton;
+extern lv_obj_t * ui_Label1;
 extern lv_obj_t * ui____initial_actions0;
 
 LV_IMG_DECLARE(ui_img_main_screen_gradient_dithered_png);    // assets\Main_screen_gradient_dithered.png
-LV_IMG_DECLARE(ui_img_thermometer2_png);    // assets\Thermometer2.png
+LV_IMG_DECLARE(ui_img_settings_png);    // assets\Settings.png
+LV_IMG_DECLARE(ui_img_light_blue_dithered_png);    // assets\light_blue_dithered.png
+LV_IMG_DECLARE(ui_img_droplet2_png);    // assets\Droplet2.png
 LV_IMG_DECLARE(ui_img_home_png);    // assets\home.png
 LV_IMG_DECLARE(ui_img_menu_png);    // assets\menu.png
 LV_IMG_DECLARE(ui_img_main_screen_gradient3_png);    // assets\Main_screen_gradient3.png
+LV_IMG_DECLARE(ui_img_thermometer2_png);    // assets\Thermometer2.png
 LV_IMG_DECLARE(ui_img_yellow_dithered_png);    // assets\yellow_dithered.png
-LV_IMG_DECLARE(ui_img_blue_yellow_red2_png);    // assets\blue_yellow_red2.png
-LV_IMG_DECLARE(ui_img_co2_png);    // assets\co2.png
-LV_IMG_DECLARE(ui_img_dithered1_png);    // assets\dithered1.png
-LV_IMG_DECLARE(ui_img_main_screen_gradient2_png);    // assets\Main_screen_gradient2.png
+LV_IMG_DECLARE(ui_img_co2_new_png);    // assets\CO2_new.png
 
 void ui_init(void);
 

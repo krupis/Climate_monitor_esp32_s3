@@ -8,44 +8,65 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-// SCREEN: ui_TemperatureScreen
-void ui_TemperatureScreen_screen_init(void);
-lv_obj_t * ui_TemperatureScreen;
-lv_obj_t * ui_TemperatureLabel1;
-lv_obj_t * ui_ThermometerIcon;
-lv_obj_t * ui_TempValue;
-lv_obj_t * ui_HomeIcon;
-lv_obj_t * ui_Label1;
+// SCREEN: ui_MainMenu
+void ui_MainMenu_screen_init(void);
+lv_obj_t * ui_MainMenu;
+lv_obj_t * ui_WiFiStatusLabel;
+lv_obj_t * ui_IndoorLabel;
+lv_obj_t * ui_IndoorLabel1;
 void ui_event_Image1(lv_event_t * e);
 lv_obj_t * ui_Image1;
 
-// SCREEN: ui_TemperatureScreen1
-void ui_TemperatureScreen1_screen_init(void);
-lv_obj_t * ui_TemperatureScreen1;
-lv_obj_t * ui_TemperatureLabel2;
-lv_obj_t * ui_ThermometerIcon2;
-lv_obj_t * ui_TempValue1;
-lv_obj_t * ui_HomeIcon1;
-lv_obj_t * ui_Label2;
-lv_obj_t * ui_Image2;
-lv_obj_t * ui_ThermometerIcon3;
+// SCREEN: ui_SettingsScreen
+void ui_SettingsScreen_screen_init(void);
+lv_obj_t * ui_SettingsScreen;
+void ui_event_Dropdown2(lv_event_t * e);
+lv_obj_t * ui_Dropdown2;
+lv_obj_t * ui_SettingMenu;
 
-// SCREEN: ui_TemperatureScreen2
-void ui_TemperatureScreen2_screen_init(void);
-lv_obj_t * ui_TemperatureScreen2;
-lv_obj_t * ui_TemperatureLabel3;
-lv_obj_t * ui_ThermometerIcon4;
-lv_obj_t * ui_TempValue2;
+// SCREEN: ui_HumidityScreen
+void ui_HumidityScreen_screen_init(void);
+lv_obj_t * ui_HumidityScreen;
+lv_obj_t * ui_HumidityLabel;
+lv_obj_t * ui_DropletIcon;
+lv_obj_t * ui_HumidityValue;
+lv_obj_t * ui_HomeIcon;
+lv_obj_t * ui_PlaceIcon;
+void ui_event_MenuIcon(lv_event_t * e);
+lv_obj_t * ui_MenuIcon;
+
+// SCREEN: ui_TemperatureScreen
+void ui_TemperatureScreen_screen_init(void);
+lv_obj_t * ui_TemperatureScreen;
+lv_obj_t * ui_TemperatureLabel;
+lv_obj_t * ui_TempValue;
 lv_obj_t * ui_HomeIcon2;
-lv_obj_t * ui_Label3;
-lv_obj_t * ui_Image3;
-lv_obj_t * ui_ThermometerIcon5;
+lv_obj_t * ui_PlaceIcon2;
+lv_obj_t * ui_MenuIcon2;
+lv_obj_t * ui_ThermometerIcon;
+
+// SCREEN: ui_CO2Screen
+void ui_CO2Screen_screen_init(void);
+lv_obj_t * ui_CO2Screen;
+lv_obj_t * ui_CO2Label;
+lv_obj_t * ui_CO2Icon;
+lv_obj_t * ui_CO2Value;
+lv_obj_t * ui_HomeIcon3;
+lv_obj_t * ui_PlaceLabel3;
+lv_obj_t * ui_MenuIcon3;
+
+// SCREEN: ui_PasswordScreen
+void ui_PasswordScreen_screen_init(void);
+lv_obj_t * ui_PasswordScreen;
+void ui_event_PasswordKeyboard(lv_event_t * e);
+lv_obj_t * ui_PasswordKeyboard;
+lv_obj_t * ui_PasswordTextArea;
+lv_obj_t * ui_PasswordConfirmButton;
+lv_obj_t * ui_Label1;
 lv_obj_t * ui____initial_actions0;
-const lv_img_dsc_t * ui_imgset_blue_yellow_red[1] = {&ui_img_blue_yellow_red2_png};
-const lv_img_dsc_t * ui_imgset_co[1] = {&ui_img_co2_png};
-const lv_img_dsc_t * ui_imgset_dithered[1] = {&ui_img_dithered1_png};
-const lv_img_dsc_t * ui_imgset_main_screen_gradient[2] = {&ui_img_main_screen_gradient2_png, &ui_img_main_screen_gradient3_png};
+const lv_img_dsc_t * ui_imgset_main_screen_gradient[1] = {&ui_img_main_screen_gradient3_png};
 const lv_img_dsc_t * ui_imgset_thermometer[1] = {&ui_img_thermometer2_png};
+const lv_img_dsc_t * ui_imgset_droplet[1] = {&ui_img_droplet2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -63,7 +84,31 @@ void ui_event_Image1(lv_event_t * e)
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
-        _ui_screen_change(ui_TemperatureScreen1, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+        _ui_screen_change(ui_SettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+    }
+}
+void ui_event_Dropdown2(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        _ui_screen_change(ui_PasswordScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0);
+    }
+}
+void ui_event_MenuIcon(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(ui_TemperatureScreen, LV_SCR_LOAD_ANIM_FADE_ON, 1000, 0);
+    }
+}
+void ui_event_PasswordKeyboard(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_keyboard_set_target(ui_PasswordScreen,  ui_PasswordTextArea);
     }
 }
 
@@ -75,9 +120,12 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
+    ui_MainMenu_screen_init();
+    ui_SettingsScreen_screen_init();
+    ui_HumidityScreen_screen_init();
     ui_TemperatureScreen_screen_init();
-    ui_TemperatureScreen1_screen_init();
-    ui_TemperatureScreen2_screen_init();
+    ui_CO2Screen_screen_init();
+    ui_PasswordScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_TemperatureScreen);
+    lv_disp_load_scr(ui_MainMenu);
 }
