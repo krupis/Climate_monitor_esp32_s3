@@ -35,7 +35,6 @@ void UART1_setup()
 
     // Configure UART parameters
     ESP_ERROR_CHECK(uart_param_config(UART, &uart_config));
-    // Set UART pins(TX: IO4, RX: IO5, RTS: IO18, CTS: IO19)
     ESP_ERROR_CHECK(uart_set_pin(UART, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
     ESP_ERROR_CHECK(uart_driver_install(UART, RX_BUF_SIZE, 0, 0, NULL, 0));
 }
@@ -76,25 +75,6 @@ void tx_task(void *arg)
         vTaskDelay(5000 / portTICK_PERIOD_MS);
     }
 }
-
-// void rx_task(void *arg)
-// {
-//     static const char *RX_TASK_TAG = "RX_TASK";
-//     esp_log_level_set(RX_TASK_TAG, ESP_LOG_INFO);
-//     uint8_t *data = (uint8_t *)malloc(RX_BUF_SIZE + 1);
-//     while (1)
-//     {
-//         const int rxBytes = uart_read_bytes(UART, data, RX_BUF_SIZE, 500 / portTICK_PERIOD_MS);
-//         if (rxBytes > 0)
-//         {
-//             data[rxBytes] = 0;
-//             ESP_LOGI(RX_TASK_TAG, "Read %d bytes: '%s'", rxBytes, data);
-//         }
-//     }
-//     free(data);
-// }
-
-
 
 
 static void set_co2(int16_t co2)

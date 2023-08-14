@@ -60,8 +60,8 @@ void app_main(void)
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
     lvgl_setup();
+    //WIFI NVS
     // NVS_open();
-
     // set_nvs_key_value("wifi_ssid", "TP-Link_5AA5");
     // set_nvs_key_value("wifi_pass", "43634927");
 
@@ -70,44 +70,25 @@ void app_main(void)
     // get_nvs_key_value("wifi_ssid",wifi_ssid_local);
     // get_nvs_key_value("wifi_pass",wifi_pass_local);
     // wifi_init_sta2(wifi_ssid_local,wifi_pass_local);
+    //END OF WIFI NVS
 
     UART1_setup();
     vTaskDelay(3000 / portTICK_PERIOD_MS);
-    // get_info();
 
     // get_info();
+    // get_info();
 
-    // Call one at a time to see examples
-    //  bsp_display_lock(0);
-    //  display_meter();
-    //  bsp_display_unlock();
-    //  display_image();
-    //  display_window();
-    // display_color_wheel();
+
 
     bsp_display_lock(0);
     display_widgets();
-    // Display_keyboard();
-    // ui_init();
     bsp_display_unlock();
 
-    // char result[100];
-    // const char *middle = "example";
 
-    // // the snprintf solution
-    // snprintf(result, sizeof result, "<%s>", middle);
 
-    // // the strcat solution
-    // result[0] = '\0';
-    // strcat(result, "<");
-    // strcat(result, middle);
-    // strcat(result, ">");
-    // printf("result = %s \n",result);
-
-    // Create_main_display();
-
-    //xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
+    xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
     xTaskCreate(UART0_task, "UART0_task", 10000, NULL, 5, NULL); // receiving commands from main uart
+    
     xTaskCreate(rx_task, "uart_rx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
     xTaskCreate(tx_task, "uart_tx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
     //xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
