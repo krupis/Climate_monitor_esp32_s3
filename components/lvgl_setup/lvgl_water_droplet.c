@@ -92,19 +92,17 @@ void set_temperature(float temperature)
     strcat(final_temp_buf, float_temp_buf);
     strcat(final_temp_buf, "°");
     lv_label_set_text(ui_TemperatureLabel1, final_temp_buf);
-    //lv_arc_set_value(ui_TemperatureArc, (int16_t)(temperature));
 }
 
 void set_humidity(float humidity)
 {
-    // char temp_buf[8];
-    // sprintf(temp_buf, "%.1f", humidity); // make the number into string using sprintf function
-    // strcat(temp_buf, "%");
-    // lv_label_set_text(ui_DropletLabel, temp_buf);
-    // lv_arc_set_value(ui_HumidityArc, (int16_t)(humidity));
+    char temp_buf[8];
+    sprintf(temp_buf, "%.1f", humidity); // make the number into string using sprintf function
+    strcat(temp_buf, "%");
+    //lv_label_set_text(ui_DropletLabel, temp_buf);
 }
 
-// lv_disp_set_rotation(dispp, LV_DISP_ROT_270);
+
 
 void Update_temp_humidity(void *arg)
 {
