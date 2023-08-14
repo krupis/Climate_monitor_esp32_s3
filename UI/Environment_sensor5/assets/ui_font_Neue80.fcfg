@@ -1,0 +1,16 @@
+{
+  "codename": "Neue80",
+  "ttf_path": "\\assets\\NeueRemanSans-Regular.otf",
+  "bin_path": "\\assets\\ui_font_Neue80.bin",
+  "c_path": "\\assets\\ui_font_Neue80.c",
+  "cfg_path": "\\assets\\ui_font_Neue80.fcfg",
+  "size": 80,
+  "bpp": 1,
+  "letters": 0,
+  "ranges": [
+    "0x20-0x7f"
+  ],
+  "symbols": "°",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

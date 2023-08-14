@@ -1,0 +1,16 @@
+{
+  "codename": "Interbold80",
+  "ttf_path": "\\assets\\Inter-Bold.ttf",
+  "bin_path": "\\assets\\ui_font_Interbold80.bin",
+  "c_path": "\\assets\\ui_font_Interbold80.c",
+  "cfg_path": "\\assets\\ui_font_Interbold80.fcfg",
+  "size": 80,
+  "bpp": 1,
+  "letters": 0,
+  "ranges": [
+    "0x20-0x7f"
+  ],
+  "symbols": "°",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

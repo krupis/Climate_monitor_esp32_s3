@@ -1,9 +1,0 @@
-screens/ui_MainScreen.c
-ui.c
-ui_helpers.c
-images/ui_img_blue_yellow_red2_png.c
-images/ui_img_thermometer_png.c
-images/ui_img_water_png.c
-images/ui_img_droplet_png.c
-images/ui_img_co2_arc_png.c
-images/ui_img_co2_png.c
