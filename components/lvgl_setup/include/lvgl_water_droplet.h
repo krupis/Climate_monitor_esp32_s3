@@ -7,6 +7,8 @@
 void ui_Mainscreen_screen_init(void);
 void Display_main();
 void set_temperature(float temperature);
+void set_co2(int16_t co2);
+void set_humidity(float humidity);
 void Update_temp_humidity(void* arg);
 
 

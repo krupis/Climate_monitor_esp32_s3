@@ -2,8 +2,8 @@
 
 static const int RX_BUF_SIZE = 1024;
 
-#define TXD_PIN 43
-#define RXD_PIN 44
+#define TXD_PIN 18
+#define RXD_PIN 17
 
 #define UART UART_NUM_2
 int num = 0;
@@ -17,7 +17,7 @@ char ID_Hi[] = {0xFE, 0x04, 0x00, 0x1D, 0x00, 0x01, 0xB5, 0xC3};    // Sensor ID
 char ID_Lo[] = {0xFE, 0x04, 0x00, 0x1E, 0x00, 0x01, 0x45, 0xC3};    // Sensor ID lo    // in Hex 071dbfe4
 
 
-extern lv_obj_t *ui_TemperatureLabel1;
+extern lv_obj_t *ui_CO2Label1;
 
 
 #define BUF_SIZE (1024)
@@ -77,17 +77,6 @@ void tx_task(void *arg)
 }
 
 
-static void set_co2(int16_t co2)
-{
-    printf("set co2 \n");
-    char float_temp_buf[8];
-    char final_temp_buf[10];
-    sprintf(float_temp_buf, "%u", co2); // make the number into string using sprintf function
-
-
-    lv_label_set_text(ui_TemperatureLabel1, float_temp_buf);
-    //lv_arc_set_value(ui_TemperatureArc, (int16_t)(temperature));
-}
 
 void rx_task(void *arg)
 {

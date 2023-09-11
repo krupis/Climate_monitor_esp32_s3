@@ -11,6 +11,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "lvgl_setup.h"
+#include "lvgl_water_droplet.h"
 
 void UART1_setup();
 void get_info();

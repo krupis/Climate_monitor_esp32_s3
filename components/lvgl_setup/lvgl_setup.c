@@ -11,7 +11,7 @@
 #define BSP_NULL_CHECK(x, ret) assert(x)
 static SemaphoreHandle_t lvgl_mux;  // LVGL mutex
 static SemaphoreHandle_t touch_mux; // Touch mutex
-#define USE_TOUCH_DISPLAY 1
+#define USE_TOUCH_DISPLAY 0
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);

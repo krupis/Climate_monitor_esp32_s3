@@ -38,11 +38,24 @@ esp_err_t i2c_master_init(void)
 
 
 esp_err_t Measure_temp_humidity(uint8_t precision){
-    uint8_t write_command[1] = {precision};
-    ESP_ERROR_CHECK(i2c_master_write_to_device(I2C_MASTER_NUM, SHT40_SENSOR_ADDR, &write_command, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS));
-    vTaskDelay(20 / portTICK_PERIOD_MS);
     uint8_t read_buffer[6];
-    ESP_ERROR_CHECK(i2c_master_read_from_device(I2C_MASTER_NUM,SHT40_SENSOR_ADDR,&read_buffer,6,I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS));
+    uint8_t write_command[1] = {precision};
+    esp_err_t err;
+    err = i2c_master_write_to_device(I2C_MASTER_NUM, SHT40_SENSOR_ADDR, &write_command, 1, I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+    if (err != ESP_OK)
+    {
+        printf("Error in writing to SHT40 device \n");
+        return err;
+    }
+    vTaskDelay(20 / portTICK_PERIOD_MS);
+
+
+    err = i2c_master_read_from_device(I2C_MASTER_NUM,SHT40_SENSOR_ADDR,&read_buffer,6,I2C_MASTER_TIMEOUT_MS / portTICK_PERIOD_MS);
+    if (err != ESP_OK)
+    {
+        printf("Error in reading from SHT40 device \n");
+        return err;
+    }
 
     float t_ticks = read_buffer[0] * 256 + read_buffer[1];
     float rh_ticks = read_buffer[3] * 256 + read_buffer[4];
@@ -56,7 +69,7 @@ esp_err_t Measure_temp_humidity(uint8_t precision){
     sht40_reading.humidity = rh_pRH;
     xQueueSend(update_queue, &sht40_reading, NULL);
 
-    return 0;
+    return ESP_OK;
 }
 
 

@@ -60,6 +60,7 @@ void app_main(void)
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
     lvgl_setup();
+
     //WIFI NVS
     // NVS_open();
     // set_nvs_key_value("wifi_ssid", "TP-Link_5AA5");
@@ -87,11 +88,13 @@ void app_main(void)
 
 
     xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
-    xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
 
     xTaskCreate(UART0_task, "UART0_task", 10000, NULL, 5, NULL); // receiving commands from main uart
     
     xTaskCreate(rx_task, "uart_rx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
     xTaskCreate(tx_task, "uart_tx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+
+
+    xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
     //xTaskCreate(Update_co2,"Update_co2",10000,NULL,2,NULL); // receiving commands from main uart
 }
