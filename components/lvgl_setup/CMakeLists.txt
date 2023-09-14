@@ -1,4 +1,4 @@
-file(GLOB_RECURSE IMAGE_SOURCES images/*.c)
+file(GLOB_RECURSE IMAGE_SOURCES images/*.c assets/*.c)
 
 idf_component_register(SRCS "lvgl_setup.c" "ui_helpers.c" "lvgl_water_droplet.c" ${IMAGE_SOURCES}
                     INCLUDE_DIRS "include"
