@@ -18,8 +18,34 @@ lv_obj_t *ui_GAP1;
 lv_obj_t *ui_GAP2;
 lv_obj_t *ui_HumidityLabel;
 lv_obj_t *ui_HumidityIcon;
-lv_obj_t *ui_CO2Icon;
 lv_obj_t *ui_CO2Label;
+void ui_event_CO2Icon( lv_event_t * e);
+lv_obj_t *ui_CO2Icon;
+lv_obj_t *ui_GAP3;
+
+
+// SCREEN: ui_CalibrationScreen
+void ui_CalibrationScreen_screen_init(void);
+lv_obj_t *ui_CalibrationScreen;
+lv_obj_t *ui_CalibrateLabel;
+void ui_event_CalibrateButton( lv_event_t * e);
+lv_obj_t *ui_CalibrateButton;
+void ui_event_BackButton1( lv_event_t * e);
+lv_obj_t *ui_BackButton1;
+lv_obj_t *ui_BackLabel1;
+
+
+// SCREEN: ui_ConfirmationScreen
+void ui_ConfirmationScreen_screen_init(void);
+lv_obj_t *ui_ConfirmationScreen;
+lv_obj_t *ui_CalibrateInfo;
+void ui_event_CalibrateStart( lv_event_t * e);
+lv_obj_t *ui_CalibrateStart;
+lv_obj_t *ui_StartLabel;
+lv_obj_t *ui_UpdateProgress;
+void ui_event_BackButton2( lv_event_t * e);
+lv_obj_t *ui_BackButton2;
+lv_obj_t *ui_BackLabel2;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 
@@ -34,6 +60,36 @@ const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_CO2Icon( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_CalibrationScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CalibrationScreen_screen_init);
+}
+}
+void ui_event_CalibrateButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_ConfirmationScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_ConfirmationScreen_screen_init);
+}
+}
+void ui_event_BackButton1( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
+}
+}
+void ui_event_CalibrateStart( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      Start_calibration( e );
+}
+}
+void ui_event_BackButton2( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
+}
+}
 
 ///////////////////// SCREENS ////////////////////
 
@@ -43,6 +99,8 @@ lv_disp_t *dispp = lv_disp_get_default();
 lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), false, LV_FONT_DEFAULT);
 lv_disp_set_theme(dispp, theme);
 ui_MainScreen_screen_init();
+ui_CalibrationScreen_screen_init();
+ui_ConfirmationScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_MainScreen);
 }

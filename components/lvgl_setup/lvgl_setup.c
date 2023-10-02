@@ -9,8 +9,9 @@
 #include "ui_helpers.h"
 
 #define BSP_NULL_CHECK(x, ret) assert(x)
-static SemaphoreHandle_t lvgl_mux;  // LVGL mutex
-static SemaphoreHandle_t touch_mux; // Touch mutex
+SemaphoreHandle_t i2c_mux;
+SemaphoreHandle_t lvgl_mux;  // LVGL mutex
+SemaphoreHandle_t touch_mux; // Touch mutex
 #define USE_TOUCH_DISPLAY 0
 
 static const char *TAG = "LVGL_SETUP";
@@ -30,10 +31,17 @@ static void bsp_touchpad_read(lv_indev_drv_t *drv, lv_indev_data_t *data)
     uint16_t touchpad_y[1] = {0};
     uint8_t touchpad_cnt = 0;
     /* Read data from touch controller into memory */
-    if (xSemaphoreTake(touch_mux, 0) == pdTRUE)
+    // if (xSemaphoreTake(touch_mux, 0) == pdTRUE)
+    // {
+    //     esp_lcd_touch_read_data(drv->user_data);
+    // }
+
+    if ((xSemaphoreTake(touch_mux, 0) == pdTRUE) && (xSemaphoreTake(i2c_mux, 100) == pdTRUE))
     {
         esp_lcd_touch_read_data(drv->user_data);
+        xSemaphoreGive(i2c_mux);
     }
+
     /* Get coordinates */
     bool touchpad_pressed = esp_lcd_touch_get_coordinates(drv->user_data, touchpad_x, touchpad_y, NULL, &touchpad_cnt, 1);
     if (touchpad_pressed && touchpad_cnt > 0)
@@ -224,23 +232,6 @@ void lvgl_setup()
     ESP_ERROR_CHECK(esp_lcd_new_panel_io_i2c((esp_lcd_i2c_bus_handle_t)EXAMPLE_I2C_NUM, &tp_io_config, &tp_io_handle));
 
     // if display is rotated 270 degrees
-    //      esp_lcd_touch_config_t tp_cfg = {
-    //      .x_max = 170,
-    //      .y_max = 320,
-    //      .rst_gpio_num = 21,
-    //      .int_gpio_num = 16,
-    //      .levels = {
-    //          .reset = 0,
-    //          .interrupt = 0,
-    //      },
-    //      .flags = {
-    //          .swap_xy = 1,
-    //          .mirror_x = 0,
-    //          .mirror_y = 1,
-    //      },
-    //      .interrupt_callback = touch_callback,
-    //  };
-
     esp_lcd_touch_config_t tp_cfg = {
         .x_max = 170,
         .y_max = 320,
@@ -258,6 +249,23 @@ void lvgl_setup()
         .interrupt_callback = touch_callback,
     };
 
+    // esp_lcd_touch_config_t tp_cfg = {
+    //     .x_max = 170,
+    //     .y_max = 320,
+    //     .rst_gpio_num = 21,
+    //     .int_gpio_num = 16,
+    //     .levels = {
+    //         .reset = 0,
+    //         .interrupt = 0,
+    //     },
+    //     .flags = {
+    //         .swap_xy = 1,
+    //         .mirror_x = 0,
+    //         .mirror_y = 1,
+    //     },
+    //     .interrupt_callback = touch_callback,
+    // };
+
     ESP_LOGI(TAG, "esp_lcd_touch_new_i2c_cst816s");
     esp_lcd_touch_new_i2c_cst816s(tp_io_handle, &tp_cfg, &tp);
 #endif
@@ -271,6 +279,9 @@ void lvgl_setup()
 
     touch_mux = xSemaphoreCreateBinary();
     BSP_NULL_CHECK(touch_mux, NULL);
+
+    i2c_mux = xSemaphoreCreateMutex();
+    BSP_NULL_CHECK(i2c_mux, NULL);
 
     // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
     lv_color_t *buf1 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
@@ -429,6 +440,7 @@ static void event_handler(lv_event_t *e)
 
 void display_dropdown()
 {
+    lv_disp_t *dispp = lv_disp_get_default();
     /*Create a normal drop down list*/
     lv_obj_t *ddlist = lv_dropdown_create(lv_scr_act());
     lv_dropdown_set_options(ddlist, "Apple\n"
@@ -437,8 +449,8 @@ void display_dropdown()
                                     "Melon\n"
                                     "Grape\n"
                                     "Raspberry");
-
     lv_obj_align(ddlist, LV_ALIGN_TOP_MID, 0, 20);
+    lv_disp_set_rotation(dispp, LV_DISP_ROT_270);
     lv_obj_add_event_cb(ddlist, event_handler, LV_EVENT_ALL, NULL);
 }
 

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "esp_log.h"
 #include "driver/i2c.h"
+#include "esp_err.h"
 
 
 #define SHT40_SENSOR_ADDR                             0x44

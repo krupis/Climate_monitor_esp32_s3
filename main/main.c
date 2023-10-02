@@ -11,6 +11,8 @@
 #include "esp_flash.h"
 #include "esp_err.h"
 #include "esp_log.h"
+
+
 #include "lvgl.h"
 #include "lvgl_setup.h"
 #include "lvgl_water_droplet.h"
@@ -19,11 +21,16 @@
 #include "WIFI.h"
 #include "nvs_custom.h"
 #include "S8.h"
+#include "gpio.h"
+
 
 static const char *TAG = "main";
-extern lv_obj_t *ui_Water;
 
-static void Monitoring_task(void *argument);
+
+
+
+
+
 
 void app_main(void)
 {
@@ -59,35 +66,28 @@ void app_main(void)
 
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
+
+
+    //ADC_Setup();
+
+
+
     lvgl_setup();
 
-    //WIFI NVS
-    // NVS_open();
-    // set_nvs_key_value("wifi_ssid", "TP-Link_5AA5");
-    // set_nvs_key_value("wifi_pass", "43634927");
-
-    // char wifi_ssid_local[20];
-    // char wifi_pass_local[20];
-    // get_nvs_key_value("wifi_ssid",wifi_ssid_local);
-    // get_nvs_key_value("wifi_pass",wifi_pass_local);
-    // wifi_init_sta2(wifi_ssid_local,wifi_pass_local);
-    //END OF WIFI NVS
-
     UART1_setup();
-    vTaskDelay(3000 / portTICK_PERIOD_MS);
-
     bsp_display_lock(0);
     ui_init();
     bsp_display_unlock();
 
-
+    get_info();
 
     
-    xTaskCreate(UART0_task, "UART0_task", 10000, NULL, 5, NULL); // receiving commands from main uart
+     xTaskCreate(UART0_task, "UART0_task", 10000, NULL, 5, NULL); // receiving commands from main uart
     
-    xTaskCreate(rx_task, "uart_rx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
-    xTaskCreate(tx_task, "uart_tx_task", 1024 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+    xTaskCreate(rx_task, "uart_rx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
+    xTaskCreate(tx_task, "uart_tx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+
+
     xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
-
     xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
 }

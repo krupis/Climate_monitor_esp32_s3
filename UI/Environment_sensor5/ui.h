@@ -23,13 +23,37 @@ extern lv_obj_t *ui_GAP1;
 extern lv_obj_t *ui_GAP2;
 extern lv_obj_t *ui_HumidityLabel;
 extern lv_obj_t *ui_HumidityIcon;
-extern lv_obj_t *ui_CO2Icon;
 extern lv_obj_t *ui_CO2Label;
+void ui_event_CO2Icon( lv_event_t * e);
+extern lv_obj_t *ui_CO2Icon;
+extern lv_obj_t *ui_GAP3;
+// SCREEN: ui_CalibrationScreen
+void ui_CalibrationScreen_screen_init(void);
+extern lv_obj_t *ui_CalibrationScreen;
+extern lv_obj_t *ui_CalibrateLabel;
+void ui_event_CalibrateButton( lv_event_t * e);
+extern lv_obj_t *ui_CalibrateButton;
+void ui_event_BackButton1( lv_event_t * e);
+extern lv_obj_t *ui_BackButton1;
+extern lv_obj_t *ui_BackLabel1;
+// SCREEN: ui_ConfirmationScreen
+void ui_ConfirmationScreen_screen_init(void);
+extern lv_obj_t *ui_ConfirmationScreen;
+extern lv_obj_t *ui_CalibrateInfo;
+void ui_event_CalibrateStart( lv_event_t * e);
+extern lv_obj_t *ui_CalibrateStart;
+extern lv_obj_t *ui_StartLabel;
+extern lv_obj_t *ui_UpdateProgress;
+void ui_event_BackButton2( lv_event_t * e);
+extern lv_obj_t *ui_BackButton2;
+extern lv_obj_t *ui_BackLabel2;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_light_blue_dithered_rotated_png);   // assets\light_blue_dithered_rotated.png
 LV_IMG_DECLARE( ui_img_thermometer_png);   // assets\Thermometer.png
 LV_IMG_DECLARE( ui_img_droplet_png);   // assets\Droplet.png
+LV_IMG_DECLARE( ui_img_co2_resize_png);   // assets\CO2_resize.png
+LV_IMG_DECLARE( ui_img_calibrate_png);   // assets\Calibrate.png
 LV_IMG_DECLARE( ui_img_co2_png);   // assets\CO2.png
 
 LV_FONT_DECLARE( ui_font_Interbold52);

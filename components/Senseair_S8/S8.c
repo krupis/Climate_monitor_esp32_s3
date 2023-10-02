@@ -2,8 +2,8 @@
 
 static const int RX_BUF_SIZE = 1024;
 
-#define TXD_PIN 18
-#define RXD_PIN 17
+#define TXD_PIN 43
+#define RXD_PIN 44
 
 #define UART UART_NUM_2
 int num = 0;
@@ -70,7 +70,6 @@ void tx_task(void *arg)
     static const char *TX_TASK_TAG = "Transfer_TASK";
     esp_log_level_set(TX_TASK_TAG, ESP_LOG_INFO);
     while (1) {
-        printf("Sending data \n");
         send_Req(CO2req, 8);
         vTaskDelay(5000 / portTICK_PERIOD_MS);
     }

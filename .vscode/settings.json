@@ -28,6 +28,9 @@
         "sstream": "c",
         "regex": "c",
         "functional": "c",
-        "complex": "c"
+        "complex": "c",
+        "esp_log.h": "c",
+        "future": "c",
+        "esp_adc_cal.h": "c"
     }
 }
