@@ -77,5 +77,6 @@ lv_obj_set_style_text_font(ui_BackLabel2, &lv_font_montserrat_18, LV_PART_MAIN| 
 
 lv_obj_add_event_cb(ui_CalibrateStart, ui_event_CalibrateStart, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BackButton2, ui_event_BackButton2, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_BackLabel2, ui_event_BackLabel2, LV_EVENT_ALL, NULL);
 
 }

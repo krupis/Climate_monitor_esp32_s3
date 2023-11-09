@@ -1,10 +1,10 @@
 {
-  "codename": "Interbold52",
+  "codename": "Interbold40",
   "ttf_path": "\\assets\\Inter-Bold.ttf",
-  "bin_path": "\\assets\\ui_font_Interbold52.bin",
-  "c_path": "\\assets\\ui_font_Interbold52.c",
-  "cfg_path": "\\assets\\ui_font_Interbold52.fcfg",
-  "size": 52,
+  "bin_path": "\\assets\\ui_font_Interbold40.bin",
+  "c_path": "\\assets\\ui_font_Interbold40.c",
+  "cfg_path": "\\assets\\ui_font_Interbold40.fcfg",
+  "size": 40,
   "bpp": 1,
   "letters": 0,
   "ranges": [

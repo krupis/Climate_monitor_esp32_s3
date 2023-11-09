@@ -20,7 +20,7 @@ lv_obj_set_align( ui_TempLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_TempLabel,"+20");
 lv_obj_set_style_text_color(ui_TempLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_TempLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_TempLabel, &ui_font_Interbold52, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_TempLabel, &ui_font_Interbold40, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_TempIcon = lv_img_create(ui_MainScreen);
 lv_img_set_src(ui_TempIcon, &ui_img_thermometer_png);
@@ -62,7 +62,7 @@ lv_obj_set_align( ui_HumidityLabel, LV_ALIGN_CENTER );
 lv_label_set_text(ui_HumidityLabel,"45");
 lv_obj_set_style_text_color(ui_HumidityLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_HumidityLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_HumidityLabel, &ui_font_Interbold52, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_HumidityLabel, &ui_font_Interbold40, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_HumidityIcon = lv_img_create(ui_MainScreen);
 lv_img_set_src(ui_HumidityIcon, &ui_img_droplet_png);
@@ -84,7 +84,7 @@ lv_obj_set_align( ui_CO2Label, LV_ALIGN_CENTER );
 lv_label_set_text(ui_CO2Label,"1000");
 lv_obj_set_style_text_color(ui_CO2Label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_CO2Label, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_CO2Label, &ui_font_Interbold52, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_CO2Label, &ui_font_Interbold40, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_CO2Icon = lv_imgbtn_create(ui_MainScreen);
 lv_imgbtn_set_src(ui_CO2Icon, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_co2_resize_png, NULL);

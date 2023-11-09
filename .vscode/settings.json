@@ -9,7 +9,7 @@
         "ESP_ROM_ELF_DIR": "c:\\Users\\petrikas.lu\\.espressif5\\tools\\esp-rom-elfs\\20220823/"
     },
     "idf.gitPathWin": "c:\\Users\\petrikas.lu\\.espressif5\\tools\\idf-git\\2.39.2\\cmd\\git.exe",
-    "idf.portWin": "COM5",
+    "idf.portWin": "COM19",
     "idf.flashType": "UART",
     "idf.adapterTargetName": "esp32s3",
     "idf.openOcdConfigs": [

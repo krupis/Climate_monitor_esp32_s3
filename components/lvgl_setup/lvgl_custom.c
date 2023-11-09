@@ -50,6 +50,7 @@ lv_obj_t *ui_BackButton2;
 lv_obj_t *ui_BackLabel2;
 lv_obj_t *ui____initial_actions0;
 
+LV_IMG_DECLARE(point_temperture_png)  // HumidityScreen
 LV_IMG_DECLARE(light_blue_png)  // HumidityScreen
 LV_IMG_DECLARE(CO2_png)         // HumidityScreen
 LV_IMG_DECLARE(CO2_resize_png)  // HumidityScreen
