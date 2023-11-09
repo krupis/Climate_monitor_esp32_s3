@@ -12,7 +12,7 @@
 SemaphoreHandle_t i2c_mux;
 SemaphoreHandle_t lvgl_mux;  // LVGL mutex
 SemaphoreHandle_t touch_mux; // Touch mutex
-#define USE_TOUCH_DISPLAY 0
+#define USE_TOUCH_DISPLAY 1
 
 static const char *TAG = "LVGL_SETUP";
 static void lvgl_timer_task(void *arg);
@@ -274,14 +274,6 @@ void lvgl_setup()
 
     lv_init();
 
-    lvgl_mux = xSemaphoreCreateMutex();
-    BSP_NULL_CHECK(lvgl_mux, NULL);
-
-    touch_mux = xSemaphoreCreateBinary();
-    BSP_NULL_CHECK(touch_mux, NULL);
-
-    i2c_mux = xSemaphoreCreateMutex();
-    BSP_NULL_CHECK(i2c_mux, NULL);
 
     // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
     lv_color_t *buf1 = heap_caps_malloc(LVGL_LCD_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
@@ -499,4 +491,16 @@ void Display_keyboard()
     lv_disp_set_theme(dispp, theme);
     setup_keyboard();
     lv_disp_load_scr(ui_Screen2);
+}
+
+void MUX_initialization(){
+
+    lvgl_mux = xSemaphoreCreateMutex();
+    BSP_NULL_CHECK(lvgl_mux, NULL);
+
+    touch_mux = xSemaphoreCreateBinary();
+    BSP_NULL_CHECK(touch_mux, NULL);
+
+    i2c_mux = xSemaphoreCreateMutex();
+    BSP_NULL_CHECK(i2c_mux, NULL);
 }

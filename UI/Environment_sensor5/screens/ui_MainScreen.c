@@ -105,6 +105,17 @@ lv_obj_clear_flag( ui_GAP3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_GAP3, lv_color_hex(0x201388), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_GAP3, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+ui_BatLabel = lv_label_create(ui_MainScreen);
+lv_obj_set_width( ui_BatLabel, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_BatLabel, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_BatLabel, 0 );
+lv_obj_set_y( ui_BatLabel, -144 );
+lv_obj_set_align( ui_BatLabel, LV_ALIGN_CENTER );
+lv_label_set_text(ui_BatLabel,"Battery:");
+lv_obj_set_style_text_color(ui_BatLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_BatLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_BatLabel, &lv_font_montserrat_26, LV_PART_MAIN| LV_STATE_DEFAULT);
+
 lv_obj_add_event_cb(ui_CO2Icon, ui_event_CO2Icon, LV_EVENT_ALL, NULL);
 
 }

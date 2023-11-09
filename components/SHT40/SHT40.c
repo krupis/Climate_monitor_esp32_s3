@@ -1,7 +1,5 @@
 #include "SHT40.h"
 
-// #define I2C_MASTER_SCL_IO           44                         /*!< GPIO number used for I2C master clock */
-// #define I2C_MASTER_SDA_IO           43                          /*!< GPIO number used for I2C master data  */
 
 #define I2C_MASTER_SCL_IO 17
 #define I2C_MASTER_SDA_IO 18
@@ -15,7 +13,7 @@
 QueueHandle_t update_queue = NULL;
 struct sht40_reading_s sht40_reading;
 
-extern SemaphoreHandle_t touch_mux; // Touch mutex
+
 extern SemaphoreHandle_t i2c_mux;
 
 esp_err_t i2c_master_init(void)
@@ -62,8 +60,8 @@ esp_err_t Measure_temp_humidity(uint8_t precision)
     float t_degC = -45 + 175 * t_ticks / 65535;
     float rh_pRH = -6 + 125 * rh_ticks / 65535;
 
-    // printf("temperature = %.2f \n", t_degC);
-    // printf("humidity = %.2f \n", rh_pRH);
+    //printf("temperature = %.2f \n", t_degC);
+    //printf("humidity = %.2f \n", rh_pRH);
     sht40_reading.temperature = t_degC;
     sht40_reading.humidity = rh_pRH;
     xQueueSend(update_queue, &sht40_reading, NULL);
@@ -77,9 +75,6 @@ void SHT40_task(void *argument)
     update_queue = xQueueCreate(2, sizeof(sht40_reading));
     for (;;)
     {
-
-        //Measure_temp_humidity(SHT40_TEMP_HUMID_REG_HIGH_PREC);
-
         if (xSemaphoreTake(i2c_mux, 100) == pdTRUE)
         {
             Measure_temp_humidity(SHT40_TEMP_HUMID_REG_HIGH_PREC);

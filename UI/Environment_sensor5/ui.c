@@ -22,6 +22,7 @@ lv_obj_t *ui_CO2Label;
 void ui_event_CO2Icon( lv_event_t * e);
 lv_obj_t *ui_CO2Icon;
 lv_obj_t *ui_GAP3;
+lv_obj_t *ui_BatLabel;
 
 
 // SCREEN: ui_CalibrationScreen

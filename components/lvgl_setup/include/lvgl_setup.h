@@ -55,6 +55,7 @@
 
 
 void lvgl_setup();
+void MUX_initialization();
 void display_meter();
 void display_window();
 void display_image();

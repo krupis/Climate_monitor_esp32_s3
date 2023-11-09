@@ -12,10 +12,9 @@
 #include "esp_err.h"
 #include "esp_log.h"
 
-
 #include "lvgl.h"
 #include "lvgl_setup.h"
-#include "lvgl_water_droplet.h"
+#include "lvgl_custom.h"
 #include "UART0.h"
 #include "SHT40.h"
 #include "WIFI.h"
@@ -23,6 +22,7 @@
 #include "S8.h"
 #include "gpio.h"
 
+#include "MLX90614_custom.h"
 
 static const char *TAG = "main";
 
@@ -42,7 +42,7 @@ void app_main(void)
         ret = nvs_flash_init();
     }
 
-    /* Print chip information */
+
     esp_chip_info_t chip_info;
     uint32_t flash_size;
     esp_chip_info(&chip_info);
@@ -66,28 +66,31 @@ void app_main(void)
 
     printf("Minimum free heap size: %" PRIu32 " bytes\n", esp_get_minimum_free_heap_size());
 
+    
 
+     UART1_setup();
+     xTaskCreate(rx_task, "uart_rx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
+     xTaskCreate(tx_task, "uart_tx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+    //get_info();
 
-    //ADC_Setup();
-
-
-
+    MUX_initialization();
     lvgl_setup();
-
-    UART1_setup();
     bsp_display_lock(0);
     ui_init();
     bsp_display_unlock();
 
-    get_info();
+
+    ADC_Setup();
+    
+    xTaskCreate(UART0_task, "UART0_task", 4000, NULL, 5, NULL); // receiving commands from main uart
+
+    xTaskCreate(SHT40_task, "SHT40_task", 4000, NULL, 5, NULL);                     
+
+    xTaskCreate(MLX90614_measure_temp, "MLX90614_measure_temp", 4000, NULL, 5, NULL);                     
 
     
-     xTaskCreate(UART0_task, "UART0_task", 10000, NULL, 5, NULL); // receiving commands from main uart
-    
-    xTaskCreate(rx_task, "uart_rx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
-    xTaskCreate(tx_task, "uart_tx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+    xTaskCreate(Update_temp_humidity, "Update_temp_humidity", 4000, NULL, 2, NULL);
 
 
-    xTaskCreate(SHT40_task,"SHT40_task",10000,NULL,5,NULL); // receiving commands from main uart
-    xTaskCreate(Update_temp_humidity,"Update_temp_humidity",10000,NULL,2,NULL); // receiving commands from main uart
 }
+

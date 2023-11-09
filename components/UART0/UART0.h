@@ -9,7 +9,7 @@
 #include "esp_sntp.h"
 #include <time.h>
 #include <sys/time.h>
-#include "lvgl_water_droplet.h"
+#include "lvgl_custom.h"
 
 
 bool ParseSystemCmd(char *line, uint16_t cmd_size);
