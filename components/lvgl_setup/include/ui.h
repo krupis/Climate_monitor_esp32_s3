@@ -14,20 +14,6 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
-// SCREEN: ui_MainScreen
-void ui_MainScreen_screen_init(void);
-extern lv_obj_t *ui_MainScreen;
-extern lv_obj_t *ui_TempLabel;
-extern lv_obj_t *ui_TempIcon;
-extern lv_obj_t *ui_GAP1;
-extern lv_obj_t *ui_GAP2;
-extern lv_obj_t *ui_HumidityLabel;
-extern lv_obj_t *ui_HumidityIcon;
-extern lv_obj_t *ui_CO2Label;
-void ui_event_CO2Icon( lv_event_t * e);
-extern lv_obj_t *ui_CO2Icon;
-extern lv_obj_t *ui_GAP3;
-extern lv_obj_t *ui_BatLabel;
 // SCREEN: ui_CalibrationScreen
 void ui_CalibrationScreen_screen_init(void);
 extern lv_obj_t *ui_CalibrationScreen;
@@ -36,7 +22,6 @@ void ui_event_CalibrateButton( lv_event_t * e);
 extern lv_obj_t *ui_CalibrateButton;
 void ui_event_BackButton1( lv_event_t * e);
 extern lv_obj_t *ui_BackButton1;
-void ui_event_BackLabel1( lv_event_t * e);
 extern lv_obj_t *ui_BackLabel1;
 // SCREEN: ui_ConfirmationScreen
 void ui_ConfirmationScreen_screen_init(void);
@@ -48,7 +33,6 @@ extern lv_obj_t *ui_StartLabel;
 extern lv_obj_t *ui_UpdateProgress;
 void ui_event_BackButton2( lv_event_t * e);
 extern lv_obj_t *ui_BackButton2;
-void ui_event_BackLabel2( lv_event_t * e);
 extern lv_obj_t *ui_BackLabel2;
 // SCREEN: ui_MainScreen1
 void ui_MainScreen1_screen_init(void);
@@ -69,15 +53,17 @@ extern lv_obj_t *ui_ObjectLabel;
 extern lv_obj_t *ui_Image3;
 extern lv_obj_t *ui_GAP7;
 extern lv_obj_t *ui_ObjectTempLabel;
+extern lv_obj_t *ui_Image1;
+extern lv_obj_t *ui_AmbientTempLabel;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_light_blue_dithered_rotated_png);   // assets\light_blue_dithered_rotated.png
+LV_IMG_DECLARE( ui_img_calibrate_png);   // assets\Calibrate.png
 LV_IMG_DECLARE( ui_img_thermometer_png);   // assets\Thermometer.png
 LV_IMG_DECLARE( ui_img_droplet_png);   // assets\Droplet.png
 LV_IMG_DECLARE( ui_img_co2_resize_png);   // assets\CO2_resize.png
-LV_IMG_DECLARE( ui_img_calibrate_png);   // assets\Calibrate.png
 LV_IMG_DECLARE( ui_img_point_temperature_png);   // assets\point_temperature.png
-LV_IMG_DECLARE( ui_img_co2_png);   // assets\CO2.png
+LV_IMG_DECLARE( ui_img_ambient_temperature_png);   // assets\ambient_temperature.png
 
 LV_FONT_DECLARE( ui_font_Interbold40);
 

@@ -32,6 +32,7 @@
         "esp_log.h": "c",
         "future": "c",
         "esp_adc_cal.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "ui_helpers.h": "c"
     }
 }

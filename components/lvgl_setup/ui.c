@@ -9,22 +9,6 @@
 ///////////////////// VARIABLES ////////////////////
 
 
-// SCREEN: ui_MainScreen
-void ui_MainScreen_screen_init(void);
-lv_obj_t *ui_MainScreen;
-lv_obj_t *ui_TempLabel;
-lv_obj_t *ui_TempIcon;
-lv_obj_t *ui_GAP1;
-lv_obj_t *ui_GAP2;
-lv_obj_t *ui_HumidityLabel;
-lv_obj_t *ui_HumidityIcon;
-lv_obj_t *ui_CO2Label;
-void ui_event_CO2Icon( lv_event_t * e);
-lv_obj_t *ui_CO2Icon;
-lv_obj_t *ui_GAP3;
-lv_obj_t *ui_BatLabel;
-
-
 // SCREEN: ui_CalibrationScreen
 void ui_CalibrationScreen_screen_init(void);
 lv_obj_t *ui_CalibrationScreen;
@@ -33,7 +17,6 @@ void ui_event_CalibrateButton( lv_event_t * e);
 lv_obj_t *ui_CalibrateButton;
 void ui_event_BackButton1( lv_event_t * e);
 lv_obj_t *ui_BackButton1;
-void ui_event_BackLabel1( lv_event_t * e);
 lv_obj_t *ui_BackLabel1;
 
 
@@ -47,7 +30,6 @@ lv_obj_t *ui_StartLabel;
 lv_obj_t *ui_UpdateProgress;
 void ui_event_BackButton2( lv_event_t * e);
 lv_obj_t *ui_BackButton2;
-void ui_event_BackLabel2( lv_event_t * e);
 lv_obj_t *ui_BackLabel2;
 
 
@@ -70,8 +52,9 @@ lv_obj_t *ui_ObjectLabel;
 lv_obj_t *ui_Image3;
 lv_obj_t *ui_GAP7;
 lv_obj_t *ui_ObjectTempLabel;
+lv_obj_t *ui_Image1;
+lv_obj_t *ui_AmbientTempLabel;
 lv_obj_t *ui____initial_actions0;
-const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -84,12 +67,6 @@ const lv_img_dsc_t *ui_imgset_co[1] = {&ui_img_co2_png};
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_CO2Icon( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_CalibrationScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CalibrationScreen_screen_init);
-}
-}
 void ui_event_CalibrateButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
@@ -99,13 +76,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_BackButton1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
-}
-}
-void ui_event_BackLabel1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
+      _ui_screen_change( &ui_MainScreen1, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0, &ui_MainScreen1_screen_init);
 }
 }
 void ui_event_CalibrateStart( lv_event_t * e) {
@@ -117,13 +88,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_BackButton2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
-}
-}
-void ui_event_BackLabel2( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
+      _ui_screen_change( &ui_MainScreen1, LV_SCR_LOAD_ANIM_MOVE_TOP, 500, 0, &ui_MainScreen1_screen_init);
 }
 }
 void ui_event_CO2Icon1( lv_event_t * e) {
@@ -137,14 +102,16 @@ if ( event_code == LV_EVENT_CLICKED) {
 
 void ui_init( void )
 {
-    lv_disp_t *dispp = lv_disp_get_default();
-    lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), false, LV_FONT_DEFAULT);
-    lv_disp_set_theme(dispp, theme);
-    ui_MainScreen_screen_init();
-    ui_CalibrationScreen_screen_init();
-    ui_ConfirmationScreen_screen_init();
-    ui_MainScreen1_screen_init();
-    ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_set_rotation(dispp, LV_DISP_ROT_270);
-    lv_disp_load_scr( ui_MainScreen1);
+lv_disp_t *dispp = lv_disp_get_default();
+lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), false, LV_FONT_DEFAULT);
+lv_disp_set_theme(dispp, theme);
+ui_CalibrationScreen_screen_init();
+ui_ConfirmationScreen_screen_init();
+ui_MainScreen1_screen_init();
+ui____initial_actions0 = lv_obj_create(NULL);
+lv_disp_set_rotation(dispp, LV_DISP_ROT_270);
+lv_disp_load_scr( ui_MainScreen1);
 }
+
+
+

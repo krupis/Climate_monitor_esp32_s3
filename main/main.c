@@ -29,6 +29,7 @@ static const char *TAG = "main";
 
 
 QueueHandle_t update_queue_point_temperature = NULL; // for MLX90614    
+QueueHandle_t update_queue_ambient_temperature = NULL; // for MLX90614 
 QueueHandle_t update_queue = NULL; // for SHT40
 
 
@@ -75,9 +76,9 @@ void app_main(void)
 
 
 
-    //  UART1_setup();
-    //  xTaskCreate(rx_task, "uart_rx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
-    //  xTaskCreate(tx_task, "uart_tx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
+      UART1_setup();
+      xTaskCreate(rx_task, "uart_rx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 1, NULL);
+      xTaskCreate(tx_task, "uart_tx_task", 2048 * 2, NULL, configMAX_PRIORITIES - 2, NULL);
     //get_info();
 
     MUX_initialization();
@@ -87,7 +88,7 @@ void app_main(void)
     bsp_display_unlock();
 
 
-    //ADC_Setup();
+    ADC_Setup();
     
     //xTaskCreate(UART0_task, "UART0_task", 4000, NULL, 5, NULL); // receiving commands from main uart
 
@@ -96,6 +97,8 @@ void app_main(void)
 
     xTaskCreate(MLX90614_measure_temp, "MLX90614_measure_temp", 4000, NULL, 5, NULL);// Collecting samples           
     xTaskCreate(Update_point_temperature, "Update_point_temperature", 4000, NULL, 2, NULL); // Updating Display
+    xTaskCreate(Update_ambient_temperature, "Update_ambient_temperature", 4000, NULL, 2, NULL); // Updating Display
+
 
     
 

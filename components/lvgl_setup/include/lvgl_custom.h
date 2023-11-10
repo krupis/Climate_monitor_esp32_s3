@@ -11,14 +11,14 @@ void set_humidity(float humidity);
 void set_battery_voltage(float battery_voltage);
 void Update_temp_humidity(void* arg);
 void set_point_temperature(float temperature);
-
+void set_ambient_temperature(float temperature);
 
 
 
 
 
 void Update_point_temperature(void *arg);
-
+void Update_ambient_temperature(void *arg);
 
 
 
