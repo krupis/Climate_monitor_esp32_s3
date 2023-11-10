@@ -10,10 +10,18 @@ void set_co2(int16_t co2);
 void set_humidity(float humidity);
 void set_battery_voltage(float battery_voltage);
 void Update_temp_humidity(void* arg);
+void set_point_temperature(float temperature);
 
 
 
-void ui_init(void);
+
+
+
+void Update_point_temperature(void *arg);
+
+
+
+
 
 
 

@@ -18,6 +18,7 @@
 #include "esp_system.h"
 #include <math.h>
 
+
 //------------------------------------------------------------------------------
   
 int MLX90614_DumpEE(uint8_t slaveAddr, uint16_t *eeData)

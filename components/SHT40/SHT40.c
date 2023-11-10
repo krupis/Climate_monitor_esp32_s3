@@ -10,7 +10,7 @@
 #define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_TIMEOUT_MS 1000
 
-QueueHandle_t update_queue = NULL;
+extern QueueHandle_t update_queue;
 struct sht40_reading_s sht40_reading;
 
 
