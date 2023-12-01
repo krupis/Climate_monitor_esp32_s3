@@ -26,7 +26,7 @@
 
 static const char *TAG = "main";
 
-
+//test
 
 QueueHandle_t update_queue_point_temperature = NULL; // for MLX90614    
 QueueHandle_t update_queue_ambient_temperature = NULL; // for MLX90614 
