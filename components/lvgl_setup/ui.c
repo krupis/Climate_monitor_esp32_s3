@@ -36,6 +36,10 @@ lv_obj_t *ui_BackLabel2;
 // SCREEN: ui_MainScreen1
 void ui_MainScreen1_screen_init(void);
 lv_obj_t *ui_MainScreen1;
+lv_obj_t *ui_AirPanel;
+lv_obj_t *ui_AirLabel;
+lv_obj_t *ui_ObjectPanel;
+lv_obj_t *ui_ObjectLabel;
 lv_obj_t *ui_TempLabel1;
 lv_obj_t *ui_TempIcon1;
 lv_obj_t *ui_HumidityLabel1;
@@ -47,8 +51,6 @@ lv_obj_t *ui_GAP6;
 lv_obj_t *ui_BatLabel1;
 lv_obj_t *ui_GAP4;
 lv_obj_t *ui_GAP5;
-lv_obj_t *ui_AirLabel;
-lv_obj_t *ui_ObjectLabel;
 lv_obj_t *ui_Image3;
 lv_obj_t *ui_GAP7;
 lv_obj_t *ui_ObjectTempLabel;
@@ -112,6 +114,5 @@ ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_set_rotation(dispp, LV_DISP_ROT_270);
 lv_disp_load_scr( ui_MainScreen1);
 }
-
 
 
