@@ -6,8 +6,6 @@
 #include "ui.h"
 #include "ui_helpers.h"
 
-//test123
-
 ///////////////////// VARIABLES ////////////////////
 
 
